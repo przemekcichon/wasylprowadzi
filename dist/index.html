@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wasyl prowadzi — spersonalizowane wycieczki po Beskidzie Niskim i Łemkowszczyźnie</title>
+<meta name="description" content="Spersonalizowane wycieczki po Beskidzie Niskim, Łemkowszczyźnie i okolicach. Od jednego popołudnia do trzech dni, od 1 do 5 osób. Prowadzi Franciszek Wasyl — historyk i mieszkaniec regionu.">
+<meta property="og:title" content="Wasyl prowadzi — wycieczki po Beskidzie Niskim i Łemkowszczyźnie">
+<meta property="og:description" content="Wiedza, humor, frajda. Trasa układana pod ciebie przez historyka, który tu mieszka.">
+<meta property="og:image" content="/img/mgla-nad-grzbietami.webp">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  section[id] { scroll-margin-top: 76px; }
+  body { margin: 0; background: #FAF8F4; color: #1B211D; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #0E5236; text-decoration-color: rgba(14,82,54,0.35); text-underline-offset: 3px; }
+  a:hover { color: #E8891B; text-decoration-color: rgba(232,137,27,0.6); }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+</style>
+</helmet>
+
+<div style="font-family: 'EB Garamond', Georgia, serif; background: #FAF8F4; min-height: 100vh;">
+
+  <nav style="position: fixed; inset: 0 auto 0 0; width: 88px; z-index: 50; display: {{ railDisplay }}; flex-direction: column; align-items: center; gap: {{ navGap }}; padding: 18px 0 16px; background: #FAF8F4; border-right: 1px solid rgba(27,33,29,0.12);" style-hover="background: #FAF8F4">
+    <a href="#top" title="{{ t.portraitTitle }}" style="display: block; width: {{ avatarSize }}; height: {{ avatarSize }}; border-radius: 999px; overflow: hidden; border: 1px solid rgba(27,33,29,0.18); box-shadow: 0 2px 10px -6px rgba(27,33,29,0.5); flex: 0 0 auto;">
+      <img src="img/franciszek-wasyl.webp" alt="Franciszek Wasyl" style="width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.15) contrast(1.05);">
+    </a>
+
+    <div style="width: 18px; height: 1px; background: rgba(27,33,29,0.18);"></div>
+
+    <sc-for list="{{ nav }}" as="item" hint-placeholder-count="6">
+      <a href="{{ item.href }}" style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; width: 100%; padding: {{ navPad }}; text-decoration: none; font-family: Barlow, system-ui, sans-serif;">
+        <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.14em; color: {{ item.num }};">{{ item.index }}</span>
+        <span style="font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: {{ item.color }};">{{ item.label }}</span>
+        <sc-if value="{{ item.active }}" hint-placeholder-val="{{ false }}">
+          <span style="position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #0E5236;"></span>
+        </sc-if>
+      </a>
+    </sc-for>
+
+    <div style="position: relative; width: 100%; display: flex; justify-content: center;">
+      <button onClick="{{ toggleMore }}" style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; width: 100%; padding: 9px 2px; background: transparent; border: 0; cursor: pointer; font-family: Barlow, system-ui, sans-serif;">
+        <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.14em; color: {{ moreNumColor }};">···</span>
+        <span style="font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: {{ moreColor }};">{{ t.moreLabel }}</span>
+        <sc-if value="{{ moreActive }}" hint-placeholder-val="{{ false }}">
+          <span style="position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #0E5236;"></span>
+        </sc-if>
+      </button>
+      <sc-if value="{{ moreOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; left: 100%; top: 0; margin-left: 8px; z-index: 60; display: flex; flex-direction: column; min-width: 236px; padding: 6px; background: #FAF8F4; border: 1px solid rgba(27,33,29,0.14); border-radius: 8px; box-shadow: 0 14px 34px -16px rgba(27,33,29,0.55);">
+          <sc-for list="{{ moreItems }}" as="m" hint-placeholder-count="2">
+            <a href="{{ m.href }}" onClick="{{ closeMore }}" style="padding: 10px 12px; border-radius: 5px; font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; color: #2A312C; text-decoration: none;" style-hover="background: rgba(14,82,54,0.07); color: #0E5236">{{ m.label }}</a>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: {{ navGap }};">
+      <sc-if value="{{ langFull }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.08em;">
+          <sc-for list="{{ langs }}" as="l" hint-placeholder-count="3">
+            <button onClick="{{ l.pick }}" title="{{ l.name }}" style="padding: 3px 8px; border-radius: 4px; cursor: pointer; background: transparent; font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: {{ l.color }}; border: {{ l.border }};" style-hover="color: #E8891B">{{ l.code }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ langCompact }}" hint-placeholder-val="{{ false }}">
+        <div style="position: relative; display: flex; align-items: center;">
+          <button onClick="{{ toggleLang }}" title="{{ t.langTitle }}" style="display: flex; align-items: center; gap: 3px; padding: 3px 8px; background: transparent; border: 1px solid rgba(14,82,54,0.35); border-radius: 4px; cursor: pointer; font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: #0E5236;" style-hover="background: rgba(14,82,54,0.08)">{{ langCode }}<span style="font-size: 9px; opacity: 0.6;">▸</span></button>
+          <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; left: 100%; top: 50%; transform: translateY(-50%); margin-left: 8px; display: flex; gap: 4px; padding: 5px 6px; background: #FAF8F4; border: 1px solid rgba(27,33,29,0.14); border-radius: 6px; box-shadow: 0 8px 24px -12px rgba(27,33,29,0.5); font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.08em;">
+              <sc-for list="{{ langsOther }}" as="l" hint-placeholder-count="2">
+                <button onClick="{{ l.pick }}" title="{{ l.name }}" style="padding: 2px 7px; border: 0; background: transparent; cursor: pointer; font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: rgba(27,33,29,0.65);" style-hover="color: #E8891B">{{ l.code }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+      <div style="width: 24px; height: 1px; background: rgba(27,33,29,0.18);"></div>
+      <div style="display: flex; flex-direction: {{ iconDir }}; align-items: center; gap: 8px;">
+      <a href="mailto:kontakt@wasylprowadzi.pl" title="kontakt@wasylprowadzi.pl" style="display: grid; place-items: center; width: {{ iconSize }}; height: {{ iconSize }}; border-radius: 999px; border: 1px solid rgba(27,33,29,0.16); font-family: Barlow, system-ui, sans-serif; font-size: 20px; line-height: 1; color: #0E5236; text-decoration: none;" style-hover="background: rgba(14,82,54,0.08); color: #E8891B">✉</a>
+      <a href="tel:+48793717774" title="793 717 774" style="display: grid; place-items: center; width: {{ iconSize }}; height: {{ iconSize }}; border-radius: 999px; border: 1px solid rgba(27,33,29,0.16); font-family: Barlow, system-ui, sans-serif; font-size: 19px; line-height: 1; color: #0E5236; text-decoration: none;" style-hover="background: rgba(14,82,54,0.08); color: #E8891B">☎</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="padding-left: {{ contentPad }};">
+
+    <header id="top" style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 14px {{ sidePad }}; background: rgba(250,248,244,0.88); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(27,33,29,0.1);">
+      <a href="#top" style="display: flex; align-items: center; gap: 12px; line-height: 0; text-decoration: none; color: #1B211D;">
+        <sc-if value="{{ isNarrow }}" hint-placeholder-val="{{ false }}">
+          <img src="img/franciszek-wasyl.webp" alt="Franciszek Wasyl" style="width: 44px; height: 44px; flex: 0 0 auto; border-radius: 999px; object-fit: cover; border: 1px solid rgba(27,33,29,0.18); filter: saturate(0.15) contrast(1.05);">
+        </sc-if>
+        <span style="display: {{ logoDisplay }}; font-family: 'EB Garamond', Georgia, serif; font-size: 25px; line-height: 1; letter-spacing: 0.005em; color: #1B211D;">wasylprowadzi<span style="color: #E8891B;">.pl</span></span>
+      </a>
+      <div style="display: flex; align-items: center; gap: {{ ctaWrapGap }}; flex: {{ ctaWrapFlex }}; font-family: Barlow, system-ui, sans-serif;">
+        <a href="tel:+48793717774" style="font-size: 14px; letter-spacing: 0.02em; color: #1B211D; text-decoration: none; display: {{ phoneDisplay }};" style-hover="color: #E8891B">793 717 774</a>
+        <a href="#kontakt" style="flex: {{ ctaFlex }}; text-align: center; font-size: {{ ctaSize }}; letter-spacing: 0.12em; text-transform: uppercase; color: #FAF8F4; background: #0E5236; padding: {{ ctaPad }}; border-radius: 999px; text-decoration: none;" style-hover="background: #E8891B">{{ t.cta }}</a>
+        <sc-if value="{{ isNarrow }}" hint-placeholder-val="{{ false }}">
+          <div style="position: relative; display: flex; align-items: center;">
+            <button onClick="{{ toggleLang }}" aria-label="{{ t.langTitle }}" title="{{ t.langTitle }}" style="display: grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(27,33,29,0.16); background: transparent; cursor: pointer; color: #0E5236;">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9z"></path></svg>
+            </button>
+            <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; top: calc(100% + 8px); right: 0; display: flex; flex-direction: column; min-width: 116px; padding: 6px; background: #FAF8F4; border: 1px solid rgba(27,33,29,0.14); border-radius: 8px; box-shadow: 0 14px 34px -16px rgba(27,33,29,0.55); font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.06em;">
+                <sc-for list="{{ langs }}" as="l" hint-placeholder-count="3">
+                  <button onClick="{{ l.pickClose }}" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; padding: 9px 10px; border: 0; border-radius: 5px; cursor: pointer; text-align: left; font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; background: {{ l.menuBg }}; color: {{ l.menuColor }};" style-hover="background: rgba(27,33,29,0.05)">{{ l.name }}<span style="display: {{ l.dotDisplay }}; color: #E8891B;">●</span></button>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+    </header>
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <section style="max-width: 1280px; margin: 0 auto; padding: {{ heroPad }};">
+      <div style="display: grid; grid-template-columns: {{ heroCols }}; gap: {{ heroGap }}; align-items: end;">
+
+        <div>
+          <img src="img/logotyp-wasylprowadzi.webp" alt="Wasyl prowadzi" style="display: block; width: {{ heroLogoW }}; max-width: 100%; height: auto; margin: 0 0 40px -8px; mix-blend-mode: multiply;">
+          <h1 style="margin: 0; font-size: clamp(40px, 5.6vw, 74px); font-weight: 400; line-height: 1.04; letter-spacing: -0.018em; text-wrap: pretty;">{{ t.heroH1 }}</h1>
+          <p style="margin: 30px 0 0; display: inline-flex; align-items: center; gap: 14px; font-size: 24px; font-style: italic; color: #0E5236;"><span style="width: 34px; height: 1px; background: #E8891B;"></span>{{ t.tagline }}</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 22px;">
+          <img src="img/mgla-nad-grzbietami.webp" alt="{{ t.heroAlt }}" style="display: block; width: 100%; aspect-ratio: {{ heroShotRatio }}; object-fit: cover; object-position: 50% 45%; border: 1px solid rgba(27,33,29,0.1);">
+          <p style="margin: 0; max-width: 40ch; font-size: 19px; line-height: 1.6; color: #3C443D;">{{ t.heroLead }}</p>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; margin-top: {{ heroRuleTop }}; padding-top: 20px; border-top: 1px solid rgba(27,33,29,0.16);">
+        <p style="margin: 0; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase; color: #6E7269;">{{ t.kicker }}</p>
+        <a href="#historia" style="font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">{{ t.startLink }}</a>
+      </div>
+    </section>
+
+    <section id="historia" style="border-top: 1px solid rgba(27,33,29,0.12); padding: 84px {{ sidePad }};">
+      <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 56px;">
+        <div>
+          <p style="margin: 0 0 14px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #E8891B;">01</p>
+          <h2 style="margin: 0; font-size: clamp(32px, 4vw, 48px); font-weight: 400; line-height: 1.08;">{{ t.s1h }}</h2>
+        </div>
+        <div style="max-width: 62ch;">
+          <p style="margin: 0 0 22px; font-size: 20px; line-height: 1.65; color: #2A312C;">{{ t.s1p1 }}</p>
+          <p style="margin: 0; font-size: 20px; line-height: 1.65; color: #2A312C;">{{ t.s1p2 }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="wasyl" style="border-top: 1px solid rgba(27,33,29,0.12); padding: 84px {{ sidePad }};">
+      <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px; align-items: start;">
+        <div>
+          <p style="margin: 0 0 14px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #E8891B;">02</p>
+          <h2 style="margin: 0 0 32px; font-size: clamp(32px, 4vw, 48px); font-weight: 400; line-height: 1.08;">{{ t.s2h }}</h2>
+          <div style="max-width: 380px;">
+            <img src="img/franciszek-wasyl.webp" alt="Franciszek Wasyl" style="width: 100%; display: block; border: 1px solid rgba(27,33,29,0.12); filter: saturate(0.1);">
+            <p style="margin: 12px 0 0; font-family: Barlow, system-ui, sans-serif; font-size: 12px; letter-spacing: 0.06em; color: #6E7269;">{{ t.portraitCaption }}</p>
+          </div>
+        </div>
+        <div style="max-width: 60ch;">
+          <p style="margin: 0 0 24px; font-size: 21px; line-height: 1.62; color: #2A312C;">{{ t.s2p1 }}</p>
+          <p style="margin: 0 0 32px; font-size: 21px; line-height: 1.62; color: #2A312C;">{{ t.s2p2 }}</p>
+          <p style="margin: 0; font-size: 20px; font-style: italic; line-height: 1.6; color: #0E5236; border-left: 2px solid #E8891B; padding-left: 20px;">{{ t.s2quote }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="szlaki" style="border-top: 1px solid rgba(27,33,29,0.12); padding: 84px {{ sidePad }};">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 56px; margin-bottom: 56px;">
+          <div>
+            <p style="margin: 0 0 14px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #E8891B;">03</p>
+            <h2 style="margin: 0; font-size: clamp(32px, 4vw, 48px); font-weight: 400; line-height: 1.08; max-width: 22ch;">{{ t.s3h }}</h2>
+          </div>
+          <div style="max-width: 60ch;">
+            <p style="margin: 0 0 20px; font-size: 20px; line-height: 1.62; color: #2A312C;">{{ t.s3p1 }}</p>
+            <p style="margin: 0; font-size: 20px; line-height: 1.62; color: #2A312C;">{{ t.s3p2 }}</p>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid rgba(27,33,29,0.14);">
+          <sc-for list="{{ trails }}" as="t" hint-placeholder-count="15">
+            <div style="border-bottom: 1px solid rgba(27,33,29,0.14);">
+              <button onClick="{{ t.toggle }}" style="display: grid; grid-template-columns: 42px 1fr auto; align-items: baseline; gap: 18px; width: 100%; padding: 20px 6px; background: transparent; border: 0; cursor: pointer; text-align: left; font-family: 'EB Garamond', Georgia, serif;" style-hover="background: rgba(14,82,54,0.035)">
+                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.12em; color: #9A9E95;">{{ t.num }}</span>
+                <span style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;">
+                  <span style="font-family: Barlow, system-ui, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: {{ t.titleColor }};">{{ t.name }}</span>
+                  <span style="font-size: 19px; color: #5C6359;">{{ t.desc }}</span>
+                </span>
+                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 18px; line-height: 1; color: #0E5236;">{{ t.sign }}</span>
+              </button>
+              <sc-if value="{{ t.open }}" hint-placeholder-val="{{ false }}">
+                <div style="display: grid; grid-template-columns: 42px 1fr; gap: 18px; padding: 0 6px 28px;">
+                  <span></span>
+                  <div style="max-width: 60ch;">
+                    <p style="margin: 0 0 18px; font-size: 20px; line-height: 1.6; color: #2A312C;">{{ t.long }}</p>
+                    <p style="margin: 0; font-family: Barlow, system-ui, sans-serif; font-size: 13px; line-height: 1.6; color: #7B8076;">{{ t.trailNote }}</p>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1px; margin-top: 56px; background: rgba(27,33,29,0.14);">
+          <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+            <div style="background: #FAF8F4; padding: 26px 24px;">
+              <p style="margin: 0 0 8px; font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #E8891B;">{{ f.label }}</p>
+              <p style="margin: 0; font-size: 19px; line-height: 1.45; color: #2A312C;">{{ f.value }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section id="mapa" style="border-top: 1px solid rgba(27,33,29,0.12); padding: 84px {{ sidePad }};">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 56px; margin-bottom: 44px;">
+          <div>
+            <p style="margin: 0 0 14px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #E8891B;">04</p>
+            <h2 style="margin: 0; font-size: clamp(32px, 4vw, 48px); font-weight: 400; line-height: 1.08;">{{ t.s4h }}</h2>
+          </div>
+          <p style="margin: 0; max-width: 56ch; font-size: 20px; line-height: 1.62; color: #2A312C;">{{ t.s4p }}</p>
+        </div>
+        <div style="position: relative; z-index: 0; isolation: isolate; height: 520px; border: 1px solid rgba(27,33,29,0.14); overflow: hidden;">
+          <x-import component-from-global-scope="wasyl-map" from="./wasyl-map.js" accent="#0E5236" hint-size="100%,520px"></x-import>
+        </div>
+      </div>
+    </section>
+
+    <section style="border-top: 1px solid rgba(27,33,29,0.12); padding: 84px {{ sidePad }};">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <p style="margin: 0 0 28px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #6E7269;">{{ t.galleryLabel }}</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px;">
+          <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="6">
+            <figure style="margin: 0;">
+              <img src="{{ g.src }}" alt="{{ g.caption }}" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: {{ g.pos }}; border: 1px solid rgba(27,33,29,0.1);">
+              <figcaption style="margin: 10px 0 0; font-family: Barlow, system-ui, sans-serif; font-size: 12px; letter-spacing: 0.04em; color: #6E7269;">{{ g.caption }}</figcaption>
+            </figure>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section id="opinie" style="border-top: 1px solid rgba(27,33,29,0.12); padding: 84px {{ sidePad }};">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 56px; margin-bottom: 48px;">
+          <div>
+            <p style="margin: 0 0 14px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #E8891B;">05</p>
+            <h2 style="margin: 0; font-size: clamp(32px, 4vw, 48px); font-weight: 400; line-height: 1.08;">{{ t.s5h }}</h2>
+          </div>
+          <p style="margin: 0; max-width: 52ch; font-family: Barlow, system-ui, sans-serif; font-size: 13px; line-height: 1.6; color: #7B8076;">{{ t.opinionsNote }}</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;">
+          <sc-for list="{{ opinions }}" as="o" hint-placeholder-count="3">
+            <blockquote style="margin: 0; padding-top: 22px; border-top: 2px solid #E8891B;">
+              <p style="margin: 0 0 18px; font-size: 21px; line-height: 1.55; color: #2A312C;">{{ o.text }}</p>
+              <footer style="font-family: Barlow, system-ui, sans-serif; font-size: 12px; letter-spacing: 0.08em; color: #6E7269;">{{ o.who }}</footer>
+            </blockquote>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt" style="border-top: 1px solid rgba(27,33,29,0.12); background: #0E5236; color: #F4F2EC; padding: 96px {{ sidePad }};">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <p style="margin: 0 0 14px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #E8891B;">06</p>
+        <h2 style="margin: 0 0 48px; font-size: clamp(32px, 4vw, 48px); font-weight: 400; line-height: 1.08;">{{ t.s6h }}</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 44px;">
+          <div>
+            <p style="margin: 0 0 10px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,242,236,0.6);">{{ t.callLabel }}</p>
+            <a href="tel:+48793717774" style="display: inline-block; font-size: clamp(34px, 5vw, 54px); line-height: 1.1; color: #F4F2EC; text-decoration: none;" style-hover="color: #E8891B">793 717 774</a>
+          </div>
+          <div>
+            <p style="margin: 0 0 10px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,242,236,0.6);">{{ t.writeLabel }}</p>
+            <a href="mailto:kontakt@wasylprowadzi.pl" style="display: inline-block; font-size: clamp(24px, 3.2vw, 38px); line-height: 1.15; color: #F4F2EC; text-decoration: none; word-break: break-word;" style-hover="color: #E8891B">kontakt@wasylprowadzi.pl</a>
+          </div>
+        </div>
+        <p style="margin: 52px 0 0; max-width: 46ch; font-size: 19px; line-height: 1.6; color: rgba(244,242,236,0.78);">{{ t.contactNote }}</p>
+      </div>
+    </section>
+
+    </sc-if>
+
+    <sc-if value="{{ showPrivacy }}" hint-placeholder-val="{{ false }}">
+    <section id="prywatnosc" style="padding: 56px {{ sidePad }} 84px;">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <a href="#top" style="display: inline-flex; align-items: center; gap: 10px; margin-bottom: 44px; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">← {{ t.backLabel }}</a>
+      </div>
+      <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px; align-items: start;">
+        <div>
+          <p style="margin: 0 0 14px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #E8891B;">{{ t.privacy.note }}</p>
+          <h2 style="margin: 0; font-size: clamp(32px, 4vw, 48px); font-weight: 400; line-height: 1.08;">{{ t.privacy.h }}</h2>
+        </div>
+        <div style="max-width: 66ch; display: flex; flex-direction: column; gap: 28px;">
+          <sc-for list="{{ privacyItems }}" as="p" hint-placeholder-count="7">
+            <div>
+              <h3 style="margin: 0 0 8px; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #0E5236;">{{ p.title }}</h3>
+              <p style="margin: 0; font-size: 19px; line-height: 1.6; color: #2A312C;">{{ p.body }}</p>
+            </div>
+          </sc-for>
+            <a href="#regulamin" style="margin-top: 8px; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">{{ t.terms.h }} →</a>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ showTerms }}" hint-placeholder-val="{{ false }}">
+    <section id="regulamin" style="padding: 56px {{ sidePad }} 84px;">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <a href="#top" style="display: inline-flex; align-items: center; gap: 10px; margin-bottom: 44px; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">← {{ t.backLabel }}</a>
+      </div>
+      <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px; align-items: start;">
+        <div>
+          <p style="margin: 0 0 14px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #E8891B;">{{ t.terms.note }}</p>
+          <h2 style="margin: 0; font-size: clamp(32px, 4vw, 48px); font-weight: 400; line-height: 1.08;">{{ t.terms.h }}</h2>
+        </div>
+        <div style="max-width: 66ch; display: flex; flex-direction: column; gap: 28px;">
+          <sc-for list="{{ termsItems }}" as="p" hint-placeholder-count="10">
+            <div style="display: grid; grid-template-columns: 42px 1fr; gap: 18px;">
+              <span style="font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.12em; line-height: 1.9; color: #9A9E95;">{{ p.num }}</span>
+              <div>
+                <h3 style="margin: 0 0 8px; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #0E5236;">{{ p.title }}</h3>
+                <p style="margin: 0; font-size: 19px; line-height: 1.6; color: #2A312C;">{{ p.body }}</p>
+              </div>
+            </div>
+          </sc-for>
+            <a href="#prywatnosc" style="margin-top: 8px; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">{{ t.privacy.h }} →</a>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <footer style="padding: 40px {{ sidePad }} {{ footerPad }}; background: #0B3F29; color: rgba(244,242,236,0.6);">
+      <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; font-family: Barlow, system-ui, sans-serif; font-size: 12px; letter-spacing: 0.06em;">
+        <span>wasylprowadzi.pl</span>
+        <span style="display: flex; flex-wrap: wrap; gap: 20px;">
+          <sc-for list="{{ moreItems }}" as="m" hint-placeholder-count="2">
+            <a href="{{ m.href }}" style="color: rgba(244,242,236,0.7); text-decoration: none;" style-hover="color: #E8891B">{{ m.label }}</a>
+          </sc-for>
+        </span>
+        <span>{{ t.kicker }}</span>
+      </div>
+    </footer>
+  </div>
+
+  <sc-if value="{{ isNarrow }}" hint-placeholder-val="{{ false }}">
+    <nav aria-label="{{ t.navAria }}" style="position: relative; position: fixed; inset: auto 0 0 0; z-index: 60; background: rgba(250,248,244,0.96); backdrop-filter: blur(8px); border-top: 1px solid rgba(27,33,29,0.14); padding-bottom: env(safe-area-inset-bottom);">
+      <div style="position: absolute; top: 0; right: 0; bottom: 0; width: 54px; display: {{ hintDisplay }}; align-items: center; justify-content: flex-end; padding-right: 7px; pointer-events: none; background: linear-gradient(to right, rgba(250,248,244,0) 0%, rgba(250,248,244,0.92) 55%, #FAF8F4 100%);">
+        <svg width="17" height="26" viewBox="0 0 17 26" fill="none" stroke="#0E5236" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4l7 9-7 9"></path></svg>
+      </div>
+      <div class="no-scrollbar" ref="{{ barRef }}" onScroll="{{ onBarScroll }}" style="display: flex; align-items: stretch; gap: 0; overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;">
+        <sc-for list="{{ nav }}" as="item" hint-placeholder-count="6">
+          <a href="{{ item.href }}" data-mob="{{ item.id }}" style="flex: 0 0 auto; scroll-snap-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 84px; padding: 12px 16px 11px; text-decoration: none; font-family: Barlow, system-ui, sans-serif; border-bottom: 2px solid {{ item.barColor }};">
+            <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.14em; color: {{ item.num }};">{{ item.index }}</span>
+            <span style="font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; color: {{ item.color }};">{{ item.label }}</span>
+          </a>
+        </sc-for>
+        <button onClick="{{ toggleMore }}" style="flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 84px; padding: 12px 16px 11px; background: transparent; border: 0; border-bottom: 2px solid {{ moreBarColor }}; cursor: pointer; font-family: Barlow, system-ui, sans-serif;">
+          <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.14em; color: {{ moreNumColor }};">···</span>
+          <span style="font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; color: {{ moreColor }};">{{ t.moreLabel }}</span>
+        </button>
+        <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 20px; border-left: 1px solid rgba(27,33,29,0.12); margin-left: 4px;">
+          <a href="tel:+48793717774" title="793 717 774" style="display: grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(27,33,29,0.16); font-family: Barlow, system-ui, sans-serif; font-size: 19px; line-height: 1; color: #0E5236; text-decoration: none;">☎</a>
+          <a href="mailto:kontakt@wasylprowadzi.pl" title="kontakt@wasylprowadzi.pl" style="display: grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(27,33,29,0.16); font-family: Barlow, system-ui, sans-serif; font-size: 20px; line-height: 1; color: #0E5236; text-decoration: none;">✉</a>
+        </div>
+      </div>
+      <sc-if value="{{ moreOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position: fixed; inset: 0; z-index: 70; display: flex; flex-direction: column; justify-content: flex-end;">
+          <div onClick="{{ closeMore }}" style="position: absolute; inset: 0; background: rgba(27,33,29,0.35);"></div>
+          <div style="position: relative; display: flex; flex-direction: column; gap: 2px; background: #FAF8F4; border-top: 1px solid rgba(27,33,29,0.14); padding: 12px 14px calc(20px + env(safe-area-inset-bottom));">
+            <sc-for list="{{ moreItems }}" as="m" hint-placeholder-count="2">
+              <a href="{{ m.href }}" onClick="{{ closeMore }}" style="display: flex; align-items: center; min-height: 52px; padding: 0 12px; border-radius: 6px; font-family: Barlow, system-ui, sans-serif; font-size: 15px; font-weight: 500; color: #2A312C; text-decoration: none;" style-hover="background: rgba(14,82,54,0.07)">{{ m.label }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </nav>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showGallery&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const TRAILS_PL = [
+  ['RED CROSS', 'szlak cmentarzy I wojny światowej', 'Zapomniane cmentarze wojenne z lat 1914–1915 — projektowane przez architektów z całej monarchii, dziś rozsiane po grzbietach i wsiach. Kto tu leży, kto to zbudował i dlaczego akurat tutaj.'],
+  ['CZARNE ZŁOTO', 'szlak naftowy', 'Kolebka światowego przemysłu naftowego: kopanki, pierwsze szyby, resztki infrastruktury i losy ludzi, którzy z ropy zrobili tu majątki.'],
+  ['WINNE KLIMATY', 'szlak tradycji winiarskich Podkarpacia', 'Winiarska historia regionu — od średniowiecznego handlu węgierskim winem po dzisiejsze podkarpackie winnice. Z degustacją, jeśli chcesz.'],
+  ['SZWEJKOWE', 'szlak piwny', 'Galicja od strony karczmy i browaru: austro-węgierskie porządki, dobre anegdoty i przystanki, w których da się to wszystko przetestować.'],
+  ['DREWNIANY ŚWIAT', 'szlak architektury cerkiewnej i drewnianej', 'Cerkwie, kościoły i chyże — jak je czytać, czym różni się cerkiew łemkowska od bojkowskiej i co się z nimi stało po 1947 roku.'],
+  ['BESKIDZKIE KAPLICZKI', 'szlak krzyży i kapliczek', 'Przydrożne kapliczki i krzyże jako zapis lokalnej pamięci: prośby, podziękowania, epidemie, granice pól i wsi.'],
+  ['DWORSKI ZAŚCIANEK', 'szlak ziemiański', 'Dwory, parki i rodziny, które rządziły tu przez pokolenia — i to, co po nich zostało.'],
+  ['RUSIŃSKIE BEZDROŻA', 'szlak łemkowski', 'Łemkowszczyzna: język, wiara, gospodarka i wysiedlenia. Wsie, których nie ma, i te, które wróciły do życia.'],
+  ['WIĘCEJ NIŻ SZTETL', 'szlak tradycji żydowskiej', 'Żydowskie miasteczka Podkarpacia — synagogi, kirkuty, rynki i handel, który je napędzał.'],
+  ['TRAKT MADZIARSKI', 'szlak węgierski', 'Stare drogi na południe: przemyt, kupcy, wojsko i węgierskie ślady po obu stronach przełęczy.'],
+  ['GALICJA', 'szlak miasteczek galicyjskich', 'Rynki, ratusze, urzędy i obyczaje c.k. prowincji — jak wyglądało życie w galicyjskim miasteczku.'],
+  ['TROPEM RYSIA', 'szlak przyrodniczy', 'Puszcza Karpacka od strony zwierząt i śladów: ryś, wilk, żubr, bocian czarny. Cicho i uważnie.'],
+  ['BUKOWA KRAINA', 'szlakiem drzew i pomników przyrody', 'Stare buczyny, pomnikowe drzewa i miejsca, gdzie las przejął z powrotem to, co było wsią.'],
+  ['OD KAMIENIA DO SZKŁA', 'szlak rzemiosła', 'Kamieniarze, hutnicy szkła, garncarze, tkacze — dawne warsztaty i to, co po nich widać w krajobrazie.'],
+  ['PSIM WĘCHEM', 'wycieczki z czworonogami', 'Trasy zaplanowane pod psa: tempo, woda, cień i miejsca, gdzie czworonóg jest naprawdę mile widziany.']
+];
+
+const TRAILS_EN = [
+  ['RED CROSS', 'trail of the First World War cemeteries', 'Forgotten war cemeteries from 1914–1915 — designed by architects from all over the monarchy, now scattered across ridges and villages. Who lies here, who built them and why in this particular place.'],
+  ['CZARNE ZŁOTO', 'the oil trail', 'The cradle of the world oil industry: hand-dug pits, the first wells, the remains of the infrastructure and the fates of the people who made fortunes here from crude oil.'],
+  ['WINNE KLIMATY', 'trail of Subcarpathian winemaking traditions', 'The wine history of the region — from the medieval trade in Hungarian wine to today’s Subcarpathian vineyards. With a tasting, if you like.'],
+  ['SZWEJKOWE', 'the beer trail', 'Galicia seen from the inn and the brewery: Austro-Hungarian order, good anecdotes and stops where all of it can be put to the test.'],
+  ['DREWNIANY ŚWIAT', 'trail of wooden and Eastern-rite church architecture', 'Greek Catholic churches, Roman Catholic churches and chyże cottages — how to read them, how a Lemko church differs from a Boyko one and what became of them after 1947.'],
+  ['BESKIDZKIE KAPLICZKI', 'trail of crosses and wayside shrines', 'Wayside shrines and crosses as a record of local memory: requests, thanksgivings, epidemics, the boundaries of fields and villages.'],
+  ['DWORSKI ZAŚCIANEK', 'the landed gentry trail', 'Manor houses, parks and the families that ruled here for generations — and what is left of them.'],
+  ['RUSIŃSKIE BEZDROŻA', 'the Lemko trail', 'Lemko country: language, faith, farming and the deportations. Villages that are gone, and those that have come back to life.'],
+  ['WIĘCEJ NIŻ SZTETL', 'trail of Jewish heritage', 'The Jewish towns of Subcarpathia — synagogues, cemeteries, market squares and the trade that drove them.'],
+  ['TRAKT MADZIARSKI', 'the Hungarian trail', 'The old roads south: smuggling, merchants, armies and Hungarian traces on both sides of the pass.'],
+  ['GALICJA', 'trail of Galician towns', 'Market squares, town halls, offices and the customs of an imperial-royal province — what life in a Galician town looked like.'],
+  ['TROPEM RYSIA', 'the nature trail', 'The Carpathian forest seen through its animals and their traces: lynx, wolf, bison, black stork. Quietly and attentively.'],
+  ['BUKOWA KRAINA', 'trail of trees and natural monuments', 'Old beech woods, monumental trees and places where the forest has taken back what used to be a village.'],
+  ['OD KAMIENIA DO SZKŁA', 'the crafts trail', 'Stonemasons, glassmakers, potters, weavers — the old workshops and what can still be seen of them in the landscape.'],
+  ['PSIM WĘCHEM', 'trips with four-legged companions', 'Routes planned around the dog: pace, water, shade and places where a four-legged guest is genuinely welcome.']
+];
+
+const TRAILS_FR = [
+  ['RED CROSS', 'sentier des cimetières de la Grande Guerre', 'Des cimetières militaires oubliés des années 1914-1915 — dessinés par des architectes venus de toute la monarchie, dispersés aujourd’hui sur les crêtes et dans les villages. Qui repose ici, qui les a construits et pourquoi précisément là.'],
+  ['CZARNE ZŁOTO', 'sentier du pétrole', 'Le berceau de l’industrie pétrolière mondiale : puits creusés à la main, premiers forages, restes d’installations et destins de ceux qui ont fait fortune ici grâce au pétrole.'],
+  ['WINNE KLIMATY', 'sentier des traditions viticoles de Subcarpatie', 'L’histoire viticole de la région — du commerce médiéval du vin hongrois aux vignobles subcarpatiques d’aujourd’hui. Avec dégustation, si vous le souhaitez.'],
+  ['SZWEJKOWE', 'sentier de la bière', 'La Galicie vue de l’auberge et de la brasserie : l’ordre austro-hongrois, de bonnes anecdotes et des étapes pour tout vérifier sur place.'],
+  ['DREWNIANY ŚWIAT', 'sentier de l’architecture en bois et des églises orientales', 'Églises grecques-catholiques, églises latines et chyże — comment les lire, ce qui distingue une église lemko d’une église boyko et ce qu’elles sont devenues après 1947.'],
+  ['BESKIDZKIE KAPLICZKI', 'sentier des croix et des chapelles', 'Chapelles et croix de bord de route comme archives de la mémoire locale : demandes, remerciements, épidémies, limites des champs et des villages.'],
+  ['DWORSKI ZAŚCIANEK', 'sentier de la noblesse terrienne', 'Manoirs, parcs et familles qui ont régné ici pendant des générations — et ce qu’il en reste.'],
+  ['RUSIŃSKIE BEZDROŻA', 'sentier lemko', 'Le pays lemko : langue, foi, économie et déportations. Les villages disparus et ceux qui ont repris vie.'],
+  ['WIĘCEJ NIŻ SZTETL', 'sentier du patrimoine juif', 'Les bourgades juives de Subcarpatie — synagogues, cimetières, places de marché et le commerce qui les faisait vivre.'],
+  ['TRAKT MADZIARSKI', 'sentier hongrois', 'Les vieilles routes vers le sud : contrebande, marchands, armées et traces hongroises des deux côtés du col.'],
+  ['GALICJA', 'sentier des bourgs galiciens', 'Places de marché, hôtels de ville, administrations et usages d’une province impériale — à quoi ressemblait la vie dans un bourg galicien.'],
+  ['TROPEM RYSIA', 'sentier nature', 'La forêt des Carpates du côté des animaux et de leurs traces : lynx, loup, bison, cigogne noire. En silence et avec attention.'],
+  ['BUKOWA KRAINA', 'sentier des arbres et des monuments naturels', 'Vieilles hêtraies, arbres remarquables et lieux où la forêt a repris ce qui était un village.'],
+  ['OD KAMIENIA DO SZKŁA', 'sentier de l’artisanat', 'Tailleurs de pierre, verriers, potiers, tisserands — les ateliers d’autrefois et ce qu’on en voit encore dans le paysage.'],
+  ['PSIM WĘCHEM', 'excursions avec un chien', 'Des itinéraires pensés pour le chien : rythme, eau, ombre et lieux où un compagnon à quatre pattes est vraiment bienvenu.']
+];
+
+const IDS = ['historia', 'wasyl', 'szlaki', 'mapa', 'opinie', 'kontakt'];
+const LEGAL_IDS = ['prywatnosc', 'regulamin'];
+const LANGS = [['pl', 'Polski', 'PL'], ['en', 'English', 'EN'], ['fr', 'Français', 'FR']];
+const SHOTS = [
+  ['img/doliny-latem.webp', '50% 55%'],
+  ['img/tablica-nieznajowa.webp', '50% 50%'],
+  ['img/poranek-nad-wsia.webp', '50% 60%'],
+  ['img/stara-wierzba.webp', '45% 50%'],
+  ['img/droga-na-wieze.webp', '55% 45%'],
+  ['img/zachod-slonca.webp', '50% 50%']
+];
+
+const I18N = {
+  pl: {
+    docTitle: 'Wasyl prowadzi — spersonalizowane wycieczki po Beskidzie Niskim i Łemkowszczyźnie',
+    nav: ['Historia', 'Wasyl', 'Szlaki', 'Mapa', 'Opinie', 'Kontakt'],
+    navAria: 'Nawigacja',
+    portraitTitle: 'Franciszek Wasyl — na górę strony',
+    portraitCaption: 'Franciszek Wasyl — historyk, autor, przewodnik',
+    langTitle: 'Zmień język',
+    cta: 'Umów wyprawę',
+    heroH1: 'Spersonalizowane wycieczki po Beskidzie\u00a0Niskim, Łemkowszczyźnie i\u00a0okolicach',
+    tagline: 'wiedza — humor — frajda',
+    heroAlt: 'Mgła nad grzbietami Beskidu Niskiego',
+    heroLead: 'Od jednego popołudnia do trzech dni. Od jednej do pięciu osób. Trasa układana pod ciebie — przez historyka, który tu mieszka.',
+    kicker: 'Beskid Niski · Łemkowszczyzna · Podkarpacie',
+    startLink: 'Zacznij od historii ↓',
+    s1h: 'Historia',
+    s1p1: 'Ten kawałek Karpat zmieniał mieszkańców, języki i granice częściej niż nazwy na mapach. Łemkowie, Żydzi, Polacy, Węgrzy, galicyjscy urzędnicy i naftowi przedsiębiorcy zostawili tu po sobie cerkwie, cmentarze, kapliczki, szyby wiertnicze i resztki dworów.',
+    s1p2: 'Większość z tego stoi dziś w lesie, bez tablicy i bez podpisu. Właśnie po to jest ta wycieczka — żeby ktoś powiedział, co widzisz.',
+    s2h: 'Kim jest Wasyl?',
+    s2p1: 'Jestem z urodzenia Rzeszowianinem, z wyboru mieszkańcem podnóża Beskidu Niskiego, z zawodu historykiem i popularyzatorem wiedzy o regionie podkarpackim, autorem książek i artykułów o historii etnicznej rejonu Karpat Wschodnich.',
+    s2p2: 'Od lat oprowadzam przyjaciół i gości po okolicy, w której żyję i którą badam jako historyk.',
+    s2quote: 'Dużo humoru, luzu i solidnej wiedzy od historyka i lokalsa w jednym.',
+    s3h: 'Historie, które możemy razem przeżyć',
+    s3p1: 'Indywidualnie zaprojektowane wycieczki po Beskidzie Niskim i terenach podgórskich; z fachowym wprowadzeniem w historię, legendy, ciekawostki i tajemnice regionu, a także smaki i atrakcje. Moje wyprawy to połączenie trekkingu, poznawania dziejów i dziedzictwa regionu, a na koniec dobrej biesiady.',
+    s3p2: 'W programie ważne miejsca, ludzie, opowieści, lokalne smakołyki i wszystko, czego dusza zapragnie.',
+    trails: TRAILS_PL,
+    trailNote: 'Szczegóły trasy — w porozumieniu z prowadzącym. Wycieczka może łączyć kilka wątków.',
+    facts: [
+      ['Czas trwania', 'Od jednego popołudnia do 3 dni'],
+      ['Grupa', 'Od 1 do maksymalnie 5 osób'],
+      ['Dodatkowo', 'Degustacje, warsztaty artystyczne, strzelnica lub winnica, pomoc z noclegiem i transportem'],
+      ['Języki', 'Polski, angielski, francuski']
+    ],
+    s4h: 'Mapa',
+    s4p: 'Obszar, po którym prowadzę: Beskid Niski i pogórza między Gorlicami, Jasłem, Krosnem i Sanokiem, z zejściami na słowacką stronę Karpat. Punkt startu ustalamy razem — dojadę tam, gdzie zaczyna się twoja trasa.',
+    galleryLabel: 'Galeria',
+    captions: [
+      'Beskidzkie doliny w pełni lata',
+      'Tablica w Nieznajowej — wsi, której już nie ma',
+      'Poranek nad podgórską wsią',
+      'Stara wierzba na dawnym siole',
+      'Droga na wieżę widokową',
+      'Zachód słońca nad grzbietami'
+    ],
+    s5h: 'Opinie',
+    opinionsNote: 'Poniższe wpisy są przykładowe — do podmiany na prawdziwe relacje uczestników.',
+    opinions: [
+      ['Trzy dni chodzenia i ani jednej nudnej minuty. Wasyl opowiada tak, że dzieci słuchały równie uważnie jak my.', 'Anna i Marek, Warszawa'],
+      ['Prosiliśmy o cmentarze z pierwszej wojny. Dostaliśmy pełny wykład w terenie, a wieczorem najlepszy bigos w Beskidzie.', 'Tomasz, Wrocław'],
+      ['Trasa ułożona pod nasze tempo i pod psa. Wróciliśmy w następnym roku.', 'Kasia, Kraków']
+    ],
+    s6h: 'Jak się umówić?',
+    callLabel: 'Zadzwoń',
+    writeLabel: 'Napisz',
+    contactNote: 'Indywidualna wyprawa uzgadniana jest z minimum tygodniowym wyprzedzeniem.',
+    moreLabel: 'Więcej',
+    backLabel: 'Powrót na stronę',
+    privacy: {
+      h: 'Polityka prywatności',
+      note: 'Aktualizacja: sierpień 2026',
+      items: [
+        ['Administrator', 'Administratorem danych jest Franciszek Wasyl, prowadzący działalność przewodnicką w Beskidzie Niskim. Kontakt: kontakt@wasylprowadzi.pl, tel. 793 717 774.'],
+        ['Jakie dane zbieram', 'Strona nie ma formularzy, kont ani newslettera. Dane podajesz dopiero wtedy, gdy dzwonisz albo piszesz e-mail — imię, numer telefonu lub adres e-mail oraz ustalenia dotyczące wyprawy. Wykorzystuję je wyłącznie do umówienia i przeprowadzenia wycieczki.'],
+        ['Hosting i ochrona', 'Strona jest hostowana w Cloudflare Pages, a ruch przechodzi przez sieć Cloudflare wraz z zaporą aplikacyjną (WAF), która blokuje ataki i nadużycia. Cloudflare przetwarza przy tym adres IP, typ przeglądarki i podobne dane techniczne — jest to niezbędne do dostarczenia i zabezpieczenia strony.'],
+        ['Statystyki', 'Do liczenia odwiedzin używam Cloudflare Web Analytics. Narzędzie nie zapisuje ciasteczek, nie tworzy profili i nie śledzi cię między stronami — pokazuje wyłącznie zbiorcze liczby odsłon i źródła wejść.'],
+        ['Ciasteczka i pamięć przeglądarki', 'Strona nie używa ciasteczek reklamowych ani analitycznych. W pamięci przeglądarki zapisywany jest tylko wybrany język (klucz „wasyl-lang”), żeby przy kolejnej wizycie strona otworzyła się w tej samej wersji.'],
+        ['Zasoby zewnętrzne', 'Kroje pisma pobierane są z Google Fonts, mapa korzysta z biblioteki Leaflet i kafli OpenStreetMap. Wczytanie tych zasobów oznacza przekazanie twojego adresu IP ich dostawcom.'],
+        ['Twoje prawa', 'Masz prawo do dostępu do swoich danych, ich sprostowania, usunięcia i ograniczenia przetwarzania oraz do sprzeciwu. Wystarczy e-mail. Skargę możesz złożyć do Prezesa Urzędu Ochrony Danych Osobowych.']
+      ]
+    },
+    terms: {
+      h: 'Regulamin świadczenia usług',
+      note: 'Obowiązuje od sierpnia 2026',
+      items: [
+        ['Usługodawca', 'Usługi świadczy Franciszek Wasyl, historyk i przewodnik. Tel. 793 717 774, kontakt@wasylprowadzi.pl.'],
+        ['Zakres usług', 'Przedmiotem usługi jest indywidualna wycieczka z przewodnikiem po Beskidzie Niskim, Łemkowszczyźnie i okolicach: od jednego popołudnia do trzech dni, dla grup od jednej do pięciu osób. Trasa, tematyka i miejsce startu ustalane są przed wyprawą.'],
+        ['Rezerwacja', 'Wyprawę rezerwuje się telefonicznie lub e-mailem, z wyprzedzeniem co najmniej tygodnia. Termin, program, punkt zbiórki i cenę potwierdzamy przed wyprawą e-mailem albo wiadomością tekstową.'],
+        ['Cena i płatność', 'Cena zależy od długości wyprawy, liczby osób i dodatkowych atrakcji; podawana jest przed rezerwacją. Sposób i termin zapłaty ustalamy indywidualnie. Koszty noclegu, wstępów i posiłków wskazywane są osobno.'],
+        ['Odwołanie i zmiana terminu', 'Uczestnik może odwołać wyprawę — proszę o informację najszybciej, jak to możliwe. Przewodnik może odwołać lub skrócić wyprawę z powodu pogody, stanu dróg, choroby albo innych okoliczności niezależnych; w takim wypadku proponuje nowy termin albo zwraca wpłatę.'],
+        ['Przebieg i bezpieczeństwo', 'Wyprawy odbywają się w terenie górskim i leśnym. Uczestnik dba o odpowiednie obuwie, odzież i zapas wody oraz informuje przewodnika o ograniczeniach zdrowotnych. Przewodnik może zmienić trasę, jeśli wymaga tego bezpieczeństwo. Osoby niepełnoletnie uczestniczą pod opieką dorosłego.'],
+        ['Zwierzęta', 'Psy są mile widziane na trasach do tego przystosowanych, po wcześniejszym ustaleniu. Opiekun odpowiada za zwierzę przez cały czas wyprawy.'],
+        ['Reklamacje', 'Uwagi i reklamacje przyjmuję e-mailem na kontakt@wasylprowadzi.pl. Odpowiadam w ciągu 14 dni.'],
+        ['Prawa autorskie', 'Teksty, zdjęcia i opisy tras zamieszczone na stronie są chronione prawem autorskim. Ich wykorzystanie wymaga zgody.'],
+        ['Postanowienia końcowe', 'W sprawach nieuregulowanych stosuje się prawo polskie. Regulamin obowiązuje od sierpnia 2026 roku.']
+      ]
+    }
+  },
+  en: {
+    docTitle: 'Wasyl prowadzi — personalised guided trips in the Beskid Niski and Lemko country',
+    nav: ['History', 'Wasyl', 'Trails', 'Map', 'Reviews', 'Contact'],
+    navAria: 'Navigation',
+    portraitTitle: 'Franciszek Wasyl — back to top',
+    portraitCaption: 'Franciszek Wasyl — historian, author, guide',
+    langTitle: 'Change language',
+    cta: 'Book a trip',
+    heroH1: 'Personalised guided trips in the Beskid\u00a0Niski, Lemko country and beyond',
+    tagline: 'knowledge — humour — good fun',
+    heroAlt: 'Mist over the ridges of the Beskid Niski',
+    heroLead: 'From a single afternoon to three days. From one to five people. A route built around you — by a historian who lives here.',
+    kicker: 'Beskid Niski · Lemko Region · Subcarpathia',
+    startLink: 'Start with the history ↓',
+    s1h: 'History',
+    s1p1: 'This corner of the Carpathians changed its inhabitants, languages and borders more often than the names on its maps. Lemkos, Jews, Poles, Hungarians, Galician officials and oil entrepreneurs left behind Eastern-rite churches, cemeteries, wayside shrines, drilling wells and the remains of manor houses.',
+    s1p2: 'Most of it stands in the forest today, with no plaque and no caption. That is what this trip is for — so that someone tells you what you are looking at.',
+    s2h: 'Who is Wasyl?',
+    s2p1: 'I was born in Rzeszów and chose to live at the foot of the Beskid Niski. By profession I am a historian and a populariser of knowledge about the Subcarpathian region, the author of books and articles on the ethnic history of the Eastern Carpathians.',
+    s2p2: 'For years I have been showing friends and guests around the area where I live and which I study as a historian.',
+    s2quote: 'Plenty of humour, an easy pace and solid knowledge — from a historian and a local in one.',
+    s3h: 'Stories we can live through together',
+    s3p1: 'Individually designed trips through the Beskid Niski and the foothills, with an expert introduction to the history, legends, curiosities and secrets of the region, as well as its flavours and attractions. My expeditions combine trekking, the history and heritage of the region, and a good feast at the end.',
+    s3p2: 'The programme covers important places, people, stories, local delicacies and whatever else you feel like.',
+    trails: TRAILS_EN,
+    trailNote: 'Route details — agreed with the guide. One trip can combine several themes.',
+    facts: [
+      ['Duration', 'From a single afternoon to 3 days'],
+      ['Group', 'From 1 to a maximum of 5 people'],
+      ['Extras', 'Tastings, art workshops, a shooting range or a vineyard, help with accommodation and transport'],
+      ['Languages', 'Polish, English, French']
+    ],
+    s4h: 'Map',
+    s4p: 'The area I guide in: the Beskid Niski and the foothills between Gorlice, Jasło, Krosno and Sanok, with crossings to the Slovak side of the Carpathians. We agree the starting point together — I will come to wherever your route begins.',
+    galleryLabel: 'Gallery',
+    captions: [
+      'Beskid valleys in high summer',
+      'An information board in Nieznajowa — a village that no longer exists',
+      'Morning above a foothill village',
+      'An old willow on the site of a vanished village',
+      'The track up to the lookout tower',
+      'Sunset over the ridges'
+    ],
+    s5h: 'Reviews',
+    opinionsNote: 'The entries below are samples — to be replaced with real accounts from participants.',
+    opinions: [
+      ['Three days of walking and not one dull minute. Wasyl tells a story so well that the children listened as closely as we did.', 'Anna and Marek, Warsaw'],
+      ['We asked for the First World War cemeteries. We got a full lecture in the field, and in the evening the best bigos in the Beskids.', 'Tomasz, Wrocław'],
+      ['The route was built around our pace and our dog. We came back the following year.', 'Kasia, Kraków']
+    ],
+    s6h: 'How to book?',
+    callLabel: 'Call',
+    writeLabel: 'Write',
+    contactNote: 'An individual expedition is arranged at least a week in advance.',
+    moreLabel: 'More',
+    backLabel: 'Back to the site',
+    privacy: {
+      h: 'Privacy policy',
+      note: 'Updated: August 2026',
+      items: [
+        ['Data controller', 'The controller of your data is Franciszek Wasyl, who runs guided trips in the Beskid Niski. Contact: kontakt@wasylprowadzi.pl, phone +48 793 717 774.'],
+        ['What data is collected', 'This site has no forms, accounts or newsletter. You provide data only when you call or write — your name, phone number or email address and the arrangements for the trip. I use them solely to arrange and run the trip.'],
+        ['Hosting and protection', 'The site is hosted on Cloudflare Pages and traffic passes through the Cloudflare network together with its web application firewall (WAF), which blocks attacks and abuse. In doing so Cloudflare processes your IP address, browser type and similar technical data, which is necessary to deliver and secure the site.'],
+        ['Statistics', 'Visits are counted with Cloudflare Web Analytics. It sets no cookies, builds no profiles and does not track you across sites — it only shows aggregate page views and referrers.'],
+        ['Cookies and browser storage', 'The site uses no advertising or analytics cookies. The only thing stored in your browser is the chosen language (the key “wasyl-lang”), so that the site opens in the same version on your next visit.'],
+        ['Third-party resources', 'Typefaces are loaded from Google Fonts; the map uses the Leaflet library and OpenStreetMap tiles. Loading these resources means your IP address is passed to their providers.'],
+        ['Your rights', 'You have the right to access your data, to correct, erase or restrict its processing and to object. An email is enough. You may also lodge a complaint with the Polish data protection authority (UODO).']
+      ]
+    },
+    terms: {
+      h: 'Terms of service',
+      note: 'In force from August 2026',
+      items: [
+        ['Service provider', 'Services are provided by Franciszek Wasyl, historian and guide. Phone +48 793 717 774, kontakt@wasylprowadzi.pl.'],
+        ['Scope of services', 'The service is an individual guided trip through the Beskid Niski, Lemko country and the surrounding area: from a single afternoon to three days, for groups of one to five people. The route, themes and starting point are agreed before the trip.'],
+        ['Booking', 'Trips are booked by phone or email, at least a week in advance. The date, programme, meeting point and price are confirmed before the trip by email or text message.'],
+        ['Price and payment', 'The price depends on the length of the trip, the number of people and any extras; it is given before booking. The method and date of payment are agreed individually. The cost of accommodation, entry tickets and meals is stated separately.'],
+        ['Cancellation and rescheduling', 'You may cancel a trip — please let me know as soon as possible. The guide may cancel or shorten a trip because of weather, road conditions, illness or other circumstances beyond his control; in that case he proposes a new date or refunds the payment.'],
+        ['Conduct and safety', 'Trips take place in mountain and forest terrain. Participants are responsible for suitable footwear, clothing and water, and for informing the guide of any health limitations. The guide may change the route if safety requires it. Minors take part under the care of an adult.'],
+        ['Dogs', 'Dogs are welcome on routes suited to them, agreed in advance. The owner is responsible for the animal throughout the trip.'],
+        ['Complaints', 'Comments and complaints are accepted by email at kontakt@wasylprowadzi.pl. I reply within 14 days.'],
+        ['Copyright', 'The texts, photographs and route descriptions published on this site are protected by copyright. Their use requires permission.'],
+        ['Final provisions', 'Matters not covered here are governed by Polish law. These terms are in force from August 2026.']
+      ]
+    }
+  },
+  fr: {
+    docTitle: 'Wasyl prowadzi — excursions personnalisées dans les Basses Beskides et le pays lemko',
+    nav: ['Histoire', 'Wasyl', 'Sentiers', 'Carte', 'Avis', 'Contact'],
+    navAria: 'Navigation',
+    portraitTitle: 'Franciszek Wasyl — retour en haut',
+    portraitCaption: 'Franciszek Wasyl — historien, auteur, guide',
+    langTitle: 'Changer de langue',
+    cta: 'Réserver une sortie',
+    heroH1: 'Excursions personnalisées dans les Basses\u00a0Beskides, le pays lemko et ses alentours',
+    tagline: 'savoir — humour — plaisir',
+    heroAlt: 'Brume sur les crêtes des Basses Beskides',
+    heroLead: 'D’un seul après-midi à trois jours. D’une à cinq personnes. Un itinéraire composé pour vous — par un historien qui vit ici.',
+    kicker: 'Basses Beskides · Pays lemko · Subcarpatie',
+    startLink: 'Commencez par l’histoire ↓',
+    s1h: 'Histoire',
+    s1p1: 'Ce coin des Carpates a changé d’habitants, de langues et de frontières plus souvent que les noms inscrits sur ses cartes. Lemkos, Juifs, Polonais, Hongrois, fonctionnaires galiciens et entrepreneurs du pétrole y ont laissé des églises orientales, des cimetières, des chapelles, des puits de forage et des restes de manoirs.',
+    s1p2: 'L’essentiel se dresse aujourd’hui en forêt, sans panneau ni légende. C’est à cela que sert cette excursion : que quelqu’un vous dise ce que vous voyez.',
+    s2h: 'Qui est Wasyl ?',
+    s2p1: 'Né à Rzeszów, j’ai choisi de vivre au pied des Basses Beskides. Historien de métier, je fais connaître la région de Subcarpatie et je suis l’auteur de livres et d’articles sur l’histoire ethnique des Carpates orientales.',
+    s2p2: 'Depuis des années, je fais découvrir à mes amis et à mes hôtes la région où je vis et que j’étudie en tant qu’historien.',
+    s2quote: 'Beaucoup d’humour, de décontraction et un vrai savoir, d’un historien qui est aussi du pays.',
+    s3h: 'Des histoires à vivre ensemble',
+    s3p1: 'Des excursions conçues sur mesure dans les Basses Beskides et les avant-monts, avec une introduction experte à l’histoire, aux légendes, aux curiosités et aux secrets de la région, ainsi qu’à ses saveurs et à ses attraits. Mes sorties mêlent randonnée, découverte du passé et du patrimoine, et, pour finir, un bon festin.',
+    s3p2: 'Au programme : des lieux importants, des gens, des récits, des spécialités locales et tout ce dont vous aurez envie.',
+    trails: TRAILS_FR,
+    trailNote: 'Les détails de l’itinéraire se règlent avec le guide. Une sortie peut associer plusieurs thèmes.',
+    facts: [
+      ['Durée', 'D’un après-midi à 3 jours'],
+      ['Groupe', 'De 1 à 5 personnes maximum'],
+      ['En plus', 'Dégustations, ateliers artistiques, stand de tir ou vignoble, aide pour l’hébergement et le transport'],
+      ['Langues', 'Polonais, anglais, français']
+    ],
+    s4h: 'Carte',
+    s4p: 'La région où je guide : les Basses Beskides et les avant-monts entre Gorlice, Jasło, Krosno et Sanok, avec des passages du côté slovaque des Carpates. Le point de départ se décide ensemble — je viens là où commence votre itinéraire.',
+    galleryLabel: 'Galerie',
+    captions: [
+      'Les vallées des Beskides en plein été',
+      'Un panneau à Nieznajowa — un village qui n’existe plus',
+      'Matin au-dessus d’un village des avant-monts',
+      'Un vieux saule sur l’emplacement d’un village disparu',
+      'Le chemin vers la tour d’observation',
+      'Coucher de soleil sur les crêtes'
+    ],
+    s5h: 'Avis',
+    opinionsNote: 'Les témoignages ci-dessous sont des exemples — à remplacer par de vrais récits de participants.',
+    opinions: [
+      ['Trois jours de marche et pas une minute d’ennui. Wasyl raconte si bien que les enfants écoutaient aussi attentivement que nous.', 'Anna et Marek, Varsovie'],
+      ['Nous avions demandé les cimetières de la Première Guerre mondiale. Nous avons eu un vrai cours sur le terrain, et le soir le meilleur bigos des Beskides.', 'Tomasz, Wrocław'],
+      ['L’itinéraire était adapté à notre rythme et à notre chien. Nous sommes revenus l’année suivante.', 'Kasia, Cracovie']
+    ],
+    s6h: 'Comment réserver ?',
+    callLabel: 'Appelez',
+    writeLabel: 'Écrivez',
+    contactNote: 'Une sortie individuelle se convient au moins une semaine à l’avance.',
+    moreLabel: 'Plus',
+    backLabel: 'Retour au site',
+    privacy: {
+      h: 'Politique de confidentialité',
+      note: 'Mise à jour : août 2026',
+      items: [
+        ['Responsable du traitement', 'Le responsable du traitement est Franciszek Wasyl, guide dans les Basses Beskides. Contact : kontakt@wasylprowadzi.pl, tél. +48 793 717 774.'],
+        ['Données collectées', 'Ce site n’a ni formulaire, ni compte, ni newsletter. Vous ne communiquez des données qu’en appelant ou en écrivant — votre nom, votre numéro de téléphone ou votre adresse e-mail et les modalités de la sortie. Je les utilise uniquement pour organiser et réaliser l’excursion.'],
+        ['Hébergement et protection', 'Le site est hébergé sur Cloudflare Pages et le trafic passe par le réseau Cloudflare avec son pare-feu applicatif (WAF), qui bloque les attaques et les abus. Cloudflare traite à cette occasion votre adresse IP, le type de navigateur et des données techniques similaires, nécessaires à la diffusion et à la sécurité du site.'],
+        ['Statistiques', 'Les visites sont comptées avec Cloudflare Web Analytics. L’outil ne dépose pas de cookies, ne crée pas de profils et ne vous suit pas d’un site à l’autre — il n’affiche que des totaux de pages vues et de sources de trafic.'],
+        ['Cookies et stockage local', 'Le site n’utilise aucun cookie publicitaire ou analytique. Seule la langue choisie est conservée dans votre navigateur (clé « wasyl-lang »), afin que le site s’ouvre dans la même version à votre prochaine visite.'],
+        ['Ressources externes', 'Les polices proviennent de Google Fonts ; la carte utilise la bibliothèque Leaflet et les tuiles OpenStreetMap. Le chargement de ces ressources implique la transmission de votre adresse IP à leurs fournisseurs.'],
+        ['Vos droits', 'Vous avez le droit d’accéder à vos données, de les rectifier, de les effacer, d’en limiter le traitement et de vous y opposer. Un e-mail suffit. Vous pouvez également saisir l’autorité polonaise de protection des données (UODO).']
+      ]
+    },
+    terms: {
+      h: 'Conditions de service',
+      note: 'En vigueur depuis août 2026',
+      items: [
+        ['Prestataire', 'Les services sont assurés par Franciszek Wasyl, historien et guide. Tél. +48 793 717 774, kontakt@wasylprowadzi.pl.'],
+        ['Étendue des services', 'La prestation est une excursion guidée individuelle dans les Basses Beskides, le pays lemko et les alentours : d’un après-midi à trois jours, pour des groupes de une à cinq personnes. L’itinéraire, les thèmes et le point de départ sont convenus avant la sortie.'],
+        ['Réservation', 'La réservation se fait par téléphone ou par e-mail, au moins une semaine à l’avance. La date, le programme, le lieu de rendez-vous et le prix sont confirmés avant la sortie par e-mail ou par SMS.'],
+        ['Prix et paiement', 'Le prix dépend de la durée, du nombre de participants et des options ; il est communiqué avant la réservation. Le mode et la date de paiement sont convenus au cas par cas. Les frais d’hébergement, d’entrée et de repas sont indiqués séparément.'],
+        ['Annulation et report', 'Vous pouvez annuler une sortie — merci de me prévenir dès que possible. Le guide peut annuler ou raccourcir une sortie en raison de la météo, de l’état des chemins, d’une maladie ou d’autres circonstances indépendantes de sa volonté ; il propose alors une nouvelle date ou rembourse le paiement.'],
+        ['Déroulement et sécurité', 'Les sorties se déroulent en terrain de montagne et de forêt. Le participant veille à avoir des chaussures et des vêtements adaptés ainsi que de l’eau, et informe le guide de toute limitation de santé. Le guide peut modifier l’itinéraire si la sécurité l’exige. Les mineurs participent sous la responsabilité d’un adulte.'],
+        ['Chiens', 'Les chiens sont bienvenus sur les itinéraires adaptés, après accord préalable. Le maître reste responsable de l’animal pendant toute la sortie.'],
+        ['Réclamations', 'Les remarques et réclamations sont reçues par e-mail à kontakt@wasylprowadzi.pl. Je réponds dans un délai de 14 jours.'],
+        ['Droits d’auteur', 'Les textes, photographies et descriptions d’itinéraires publiés sur ce site sont protégés par le droit d’auteur. Leur utilisation requiert une autorisation.'],
+        ['Dispositions finales', 'Les points non réglés ici relèvent du droit polonais. Les présentes conditions sont en vigueur depuis août 2026.']
+      ]
+    }
+  }
+};
+
+class Component extends DCLogic {
+  state = { active: 'historia', open: null, shortViewport: false, langOpen: false, moreOpen: false, narrow: false, barAtEnd: false, lang: 'pl', view: 'home' };
+
+  readRoute() {
+    const h = (window.location.hash || '').replace('#', '');
+    if (h === 'prywatnosc') return 'privacy';
+    if (h === 'regulamin') return 'terms';
+    return 'home';
+  }
+
+  componentDidMount() {
+    let start = this.state.lang;
+    try {
+      const saved = window.localStorage.getItem('wasyl-lang');
+      if (saved && I18N[saved]) { start = saved; if (saved !== this.state.lang) this.setState({ lang: saved }); }
+    } catch (e) {}
+    this.syncDocLang(start);
+    const view0 = this.readRoute();
+    if (view0 !== 'home') this.setState({ view: view0 });
+    this.onHash = () => {
+      const view = this.readRoute();
+      const h = (window.location.hash || '').replace('#', '');
+      this.setState({ view, moreOpen: false, langOpen: false });
+      if (view !== 'home') { setTimeout(() => window.scrollTo({ top: 0 }), 40); return; }
+      if (h && IDS.indexOf(h) !== -1) {
+        setTimeout(() => {
+          const el = document.getElementById(h);
+          if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76 });
+        }, 40);
+      } else {
+        setTimeout(() => window.scrollTo({ top: 0 }), 40);
+      }
+    };
+    window.addEventListener('hashchange', this.onHash);
+    this.titleTimer = setTimeout(() => this.syncDocLang(this.state.lang), 400);
+    const ids = IDS;
+    const pick = () => {
+      if (this.state.view !== 'home') return;
+      const line = 140; // pod przyklejonym nagłówkiem
+      let current = ids[0];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) current = id;
+      });
+      // ostatnia sekcja, gdy strona jest przewinięta do końca
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 8) {
+        current = ids[ids.length - 1];
+      }
+      if (current !== this.state.active) this.setState({ active: current });
+    };
+    this.onScroll = () => {
+      if (this.raf) return;
+      this.raf = requestAnimationFrame(() => { this.raf = null; pick(); });
+    };
+    this.onResize = () => {
+      const short = window.innerHeight < 760;
+      const narrow = window.innerWidth < 900;
+      if (short !== this.state.shortViewport || narrow !== this.state.narrow) {
+        this.setState({ shortViewport: short, narrow, langOpen: false });
+      }
+      this.onScroll();
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onResize);
+    this.onResize();
+    pick();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('hashchange', this.onHash);
+    if (this.titleTimer) clearTimeout(this.titleTimer);
+    if (this.raf) cancelAnimationFrame(this.raf);
+  }
+
+  checkBarEnd() {
+    const b = this.bar;
+    if (!b) return;
+    const atEnd = b.scrollLeft + b.clientWidth >= b.scrollWidth - 6;
+    if (atEnd !== this.state.barAtEnd) this.setState({ barAtEnd: atEnd });
+  }
+
+  // dokument: język + tytuł
+  syncDocLang(lang) {
+    const t = I18N[lang] || I18N.pl;
+    this._docLang = lang;
+    document.documentElement.lang = lang;
+    document.title = t.docTitle;
+  }
+
+  setLang(lang) {
+    if (lang === this.state.lang) { this.setState({ langOpen: false }); return; }
+    try { window.localStorage.setItem('wasyl-lang', lang); } catch (e) {}
+    this.setState({ lang, open: null, langOpen: false });
+    this.syncDocLang(lang);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.lang !== this.state.lang) this.syncDocLang(this.state.lang);
+    if (!this.state.narrow || prevState.active === this.state.active) return;
+    const bar = this.bar;
+    if (!bar) return;
+    const el = bar.querySelector('[data-mob="' + this.state.active + '"]');
+    if (!el) return;
+    const target = el.offsetLeft - (bar.clientWidth - el.offsetWidth) / 2;
+    bar.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+  }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#0E5236';
+    const t = I18N[this.state.lang] || I18N.pl;
+    const legalActive = this.state.view !== 'home';
+    if (this._docLang !== this.state.lang) this.syncDocLang(this.state.lang);
+    const nav = IDS.map((id, i) => {
+      const active = this.state.active === id;
+      return {
+        id,
+        href: '#' + id,
+        label: t.nav[i],
+        index: '0' + (i + 1),
+        active,
+        color: active ? accent : 'rgba(27,33,29,0.75)',
+        num: active ? '#E8891B' : 'rgba(27,33,29,0.45)',
+        barColor: active ? accent : 'transparent'
+      };
+    });
+
+    const langs = LANGS.map(([code, name, short]) => {
+      const on = this.state.lang === code;
+      return {
+        code: short,
+        name,
+        active: on,
+        color: on ? accent : 'rgba(27,33,29,0.55)',
+        border: on ? '1px solid rgba(14,82,54,0.35)' : '1px solid transparent',
+        menuBg: on ? 'rgba(14,82,54,0.09)' : 'transparent',
+        menuColor: on ? accent : 'rgba(27,33,29,0.7)',
+        dotDisplay: on ? 'inline' : 'none',
+        pick: () => this.setLang(code),
+        pickClose: () => this.setLang(code)
+      };
+    });
+
+    const trails = t.trails.map(([name, desc, long], i) => {
+      const open = this.state.open === i;
+      return {
+        name, desc, long, open,
+        num: String(i + 1).padStart(2, '0'),
+        sign: open ? '−' : '+',
+        titleColor: open ? accent : '#1B211D',
+        toggle: () => this.setState(s => ({ open: s.open === i ? null : i }))
+      };
+    });
+
+    return {
+      nav,
+      trails,
+      t,
+      langs,
+      langsOther: langs.filter(l => !l.active),
+      langCode: langs.filter(l => l.active).map(l => l.code)[0] || 'PL',
+      isNarrow: this.state.narrow,
+      barRef: (el) => {
+        this.bar = el;
+        if (el && !this._barChecked) { this._barChecked = true; setTimeout(() => this.checkBarEnd(), 60); }
+      },
+      onBarScroll: () => this.checkBarEnd(),
+      hintDisplay: this.state.barAtEnd ? 'none' : 'flex',
+      logoDisplay: this.state.narrow ? 'none' : 'block',
+      heroLogoW: this.state.narrow ? '260px' : '400px',
+      heroCols: this.state.narrow ? '1fr' : 'minmax(0, 1.18fr) minmax(0, 0.82fr)',
+      heroGap: this.state.narrow ? '40px' : '64px',
+      heroPad: this.state.narrow ? '48px 25px 56px' : '84px 40px 72px',
+      sidePad: this.state.narrow ? '25px' : '40px',
+      heroShotRatio: this.state.narrow ? '4 / 3' : '4 / 5',
+      heroRuleTop: this.state.narrow ? '44px' : '72px',
+      phoneDisplay: this.state.narrow ? 'none' : 'block',
+      ctaWrapFlex: '0 0 auto',
+      ctaWrapGap: this.state.narrow ? '10px' : '22px',
+      ctaFlex: '0 0 auto',
+      ctaSize: this.state.narrow ? '13px' : '12px',
+      ctaPad: this.state.narrow ? '11px 16px' : '10px 18px',
+      railDisplay: this.state.narrow ? 'none' : 'flex',
+      contentPad: this.state.narrow ? '0px' : '88px',
+      footerPad: this.state.narrow ? '120px' : '40px',
+      navGap: '14px',
+      navPad: '9px 2px',
+      iconSize: '40px',
+      iconDir: 'column',
+      avatarSize: '46px',
+      langFull: !this.state.shortViewport,
+      langCompact: this.state.shortViewport,
+      langOpen: this.state.langOpen,
+      toggleLang: () => this.setState(s => ({ langOpen: !s.langOpen, moreOpen: false })),
+      closeLang: () => this.setState({ langOpen: false }),
+      moreOpen: this.state.moreOpen,
+      toggleMore: () => this.setState(s => ({ moreOpen: !s.moreOpen, langOpen: false })),
+      closeMore: () => this.setState({ moreOpen: false }),
+      moreActive: legalActive,
+      isHome: this.state.view === 'home',
+      showPrivacy: this.state.view === 'privacy',
+      showTerms: this.state.view === 'terms',
+      moreColor: legalActive ? accent : 'rgba(27,33,29,0.75)',
+      moreNumColor: legalActive ? '#E8891B' : 'rgba(27,33,29,0.45)',
+      moreBarColor: legalActive ? accent : 'transparent',
+      moreItems: [
+        { href: '#prywatnosc', label: t.privacy.h },
+        { href: '#regulamin', label: t.terms.h }
+      ],
+      privacyItems: t.privacy.items.map(([title, body]) => ({ title, body })),
+      termsItems: t.terms.items.map(([title, body], i) => ({ title, body, num: String(i + 1).padStart(2, '0') })),
+      facts: t.facts.map(([label, value]) => ({ label, value })),
+      gallery: this.props.showGallery === false ? [] : SHOTS.map(([src, pos], i) => ({ src, pos, caption: t.captions[i] })),
+      opinions: t.opinions.map(([text, who]) => ({ text, who }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

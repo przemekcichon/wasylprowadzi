@@ -24,7 +24,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - Decyzje architektoniczne, stan wdrożenia i harmonogram kroków dokumentujemy na bieżąco w `plan.md`
 - Plan dzieli się na fazy: przygotowanie środowiska, implementacja, testy, deploy, utrzymanie. Każda faza ma checklistę zadań i harmonogram. 
-- Każda faza dodawana jest 
+- Fazy mogą być dodawane w sesji planistycznej i zmieniane w trakcie sesji implementacyjnej, jeśli pojawią się nowe informacje. Każda zmiana w planie wymaga uzasadnienia i dokumentacji w `plan.md`.
+- Realizujemy tylko zadania z planu, nie improwizujemy. Jeśli pojawi się nowy pomysł, agent LLM dodaje go do planu i harmonogramu, a nie implementuje od razu.
+- Dodajemy do planu jako kandydat w każdym czasie pracy. Kandydaci są poza planem, dopóki nie zostaną przeniesieni do planu po sesji planistycznej. Wówczas kandydat zostaje oznaczony kolorową ikoną graficzną żeby było widać, że został promowany do planu.
+- Sesja planistyczna poprzedzona jest ground-truth — weryfikacją stanu repo, serwera i dokumentów. Agent LLM nie polega wyłącznie na historii rozmowy czy tym, co napisane w `plan.md`.
+- Na końcu sesji planistycznej agent LLM przygotowuje gotowy prompt startowy dla następnej sesji implementacyjnej: stan projektu, co zrobione, co dalej. Nowa sesja zaczyna od ground-truth — weryfikuje faktyczny stan (repo, serwer, dokumenty) zamiast polegać wyłącznie na historii rozmowy czy na tym, co napisane w `plan.md`.
+- Agent w sesji implementacyjnej odsyła do weryfikacji poprawność swojego kodu i konfiguracji do osobnej subsesji agenta weryfikatora. Agent weryfikator sprawdza poprawność kodu i konfiguracji, a nie tylko czy kod się kompiluje. Agent weryfikator może też weryfikować poprawność konfiguracji serwera i usług zewnętrznych (np. Cloudflare Pages, MaxMind, GTM). Agent weryfikator może też weryfikować poprawność dokumentacji w `plan.md`.
+- Agent implementujący uwzględnia weryfikację w swoim planie pracy i nie przechodzi do kolejnych zadań, dopóki weryfikacja nie zakończy się sukcesem. Weryfikacja może wymagać kilku iteracji. 
 - Komunikacja z osobami nietechnicznymi (np. mailem) — bez żargonu, tylko konkretna prośba + krótkie "dlaczego"
 - Maksymalne wykorzystanie agenta LLM (Claude Code) w prowadzeniu wdrożenia — automatyzacja, weryfikacja (np. propagacji DNS), dokumentowanie decyzji, zamiast pracy ręcznej
 

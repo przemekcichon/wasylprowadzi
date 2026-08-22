@@ -10,6 +10,9 @@ Stan wdrożenia, decyzje architektoniczne i harmonogram — aktualizowane na bie
 - Ustalony workflow: zmiany przez PR, merge tylko na wyraźne pozwolenie użytkownika. Pierwszy PR (#1, doprecyzowanie sekcji "Zasady pracy") zmergowany do `main`, gałąź feature usunięta.
 - `.gitignore` w katalogu głównym z regułami sekretów (`.env`, `*.mmdb`) zgodnie z CLAUDE.md.
 
+### Wyjątek od procesu
+- Commit `4f14c23` ("Ikony telefonu i poczty jako SVG zamiast emoji", `dist/index.html`) trafił bezpośrednio na `main`, bez PR-a — użytkownik zmienił emoji ikony telefonu/poczty na SVG, żeby Apple nie renderowało ich jako czerwonych emoji. Zmiana jest już opublikowana i wypchnięta, więc odtworzenie jej przez PR wymagałoby przepisania historii `main` (revert + reapply) — uznane za nieproporcjonalne ryzyko dla drobnej, jednoznacznej poprawki wizualnej. Odnotowane tu po fakcie jako świadomy wyjątek; kolejne zmiany nadal przez PR.
+
 ### Do zrobienia (kandydaci — nie w planie, do przegłosowania na sesji planistycznej)
 - **Cloudflare Pages**: podpięcie repo przez dashboard (Workers & Pages → Create → Pages → Connect to Git). Framework preset: None, build command: puste, **output directory: `dist`**. Potem custom domains: `wasylprowadzi.pl` + `www`. Wymaga działania użytkownika w przeglądarce — agent nie ma do tego API.
 - **Claude Design → GitHub**: sprawdzone narzędzie `DesignSync` obsługuje tylko projekty typu "design system" (biblioteki komponentów) — na koncie użytkownika są dwa: "hurra Design System" i "Design System", żaden nie odpowiada projektowi, który wygenerował `dist/`. Połączenie dla tego konkretnego projektu strony (jeśli istnieje) trzeba szukać w ustawieniach tego projektu na claude.ai/design — wymaga sprawdzenia przez użytkownika.

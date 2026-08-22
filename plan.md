@@ -18,6 +18,7 @@ Stan wdrożenia, decyzje architektoniczne i harmonogram — aktualizowane na bie
 ### Do zrobienia (kandydaci — nie w planie, do przegłosowania na sesji planistycznej)
 - **Claude Design → GitHub**: narzędzie `DesignSync` widzi tylko projekty typu "design system" (biblioteki komponentów) z konta, na którym akurat jest zalogowana sesja — przy sprawdzaniu byliśmy zalogowani na złe konto, więc nie potwierdziliśmy jeszcze, czy/jak połączyć konkretny projekt strony (ten, który wygenerował `dist/`) z GitHubem. Do ponownego sprawdzenia na właściwym koncie.
 - **Migracja na Next.js**: obecnie `dist/` to czysty statyczny HTML/JS bez build stepu (zgodnie z README w `dist/`). CLAUDE.md zakłada Next.js jako docelowy framework, ale nie jest jeszcze wdrożony — do zaplanowania jako odrębna faza.
+- **Bug: dolne menu na mobile nie dociąga do prawej** — na urządzeniu mobilnym dolne menu nie domyka się do prawego krawędzia; próba przewinięcia w prawo, żeby zobaczyć ikonę koperty, automatycznie wraca (snap) w lewo. Zgłoszone przez użytkownika, do zdiagnozowania w kodzie (`dist/index.html` / `support.js`) i naprawy.
 
 ## Prompt startowy na następną sesję
 

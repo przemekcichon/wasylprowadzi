@@ -45,7 +45,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Github do podpięcia do Cloudflare Pages, automatyczny deploy po merge na main
 - Github do podpięcia do Claude Code, automatyczne tworzenie sesji i PR-ów z promptów agenta
 - Github do podpięcia do Claude Design, automatyczne aktualizacje komponentów UI w repo
-- **Sekrety — tylko przez `.env`, nigdy w repo.** Container Config z GTM (klucz base64) oraz MaxMind Account ID/License Key trzymane w `.env` na serwerze (tworzony ręcznie przez SSH, poza repo). W repo commitowany tylko `.env.example` (szablon nazw zmiennych, bez wartości). `.env` i baza `*.mmdb` w `.gitignore`.
 
 ## Workflow: sesje i Pull Requesty
 

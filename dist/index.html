@@ -767,12 +767,14 @@ class Component extends DCLogic {
         const el = document.getElementById(id);
         if (el && el.getBoundingClientRect().top <= line) current = id;
       });
-      // ostatnia sekcja, gdy strona jest przewinięta do końca
-      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 8) {
+      // ostatnia sekcja, gdy strona jest przewinięta do końca — tylko gdy jest co przewijać
+      const docH = document.documentElement.scrollHeight;
+      if (docH > window.innerHeight + 8 && window.innerHeight + window.scrollY >= docH - 8) {
         current = ids[ids.length - 1];
       }
       if (current !== this.state.active) this.setState({ active: current });
     };
+    this.pick = pick;
     this.onScroll = () => {
       if (this.raf) return;
       this.raf = requestAnimationFrame(() => { this.raf = null; pick(); });
@@ -787,6 +789,12 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onResize);
+    // wysokość dokumentu rośnie w miarę wczytywania zdjęć i mapy — przelicz ponownie
+    window.addEventListener('load', this.onScroll);
+    if (window.ResizeObserver) {
+      this.docObs = new ResizeObserver(() => this.onScroll());
+      this.docObs.observe(document.body);
+    }
     this.onResize();
     pick();
   }
@@ -795,6 +803,8 @@ class Component extends DCLogic {
     window.removeEventListener('scroll', this.onScroll);
     window.removeEventListener('resize', this.onResize);
     window.removeEventListener('hashchange', this.onHash);
+    window.removeEventListener('load', this.onScroll);
+    if (this.docObs) this.docObs.disconnect();
     if (this.titleTimer) clearTimeout(this.titleTimer);
     if (this.raf) cancelAnimationFrame(this.raf);
   }

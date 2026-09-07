@@ -8,10 +8,11 @@ Statyczna strona jednostronicowa. Bez build stepu — Cloudflare Pages serwuje p
 - `wasyl-map.js` — komponent mapy (Leaflet + kafle OpenStreetMap)
 - `img/` — zdjęcia (WebP, przeskalowane)
 - `vendor/leaflet/` — Leaflet 1.9.4 (js, css, images), hostowany lokalnie
+- `vendor/react/` — React i ReactDOM 18.3.1 UMD, hostowane lokalnie; `index.html` mapuje na nie adresy CDN przez `window.__resources` przed wczytaniem `support.js`
 - `fonts/` — 14 plików woff2 pobranych wprost z Google Fonts (EB Garamond 400/500/600 + 400 italic, Barlow 400/500/600; podzbiory latin i latin-ext), licencja OFL
 - `font-test.html`, `font-fetch.html` — strony pomocnicze, nie część serwisu; można usunąć
 
-Jedyny zasób z zewnątrz to kafle mapy z `tile.openstreetmap.org`. Fonty i Leaflet idą z naszego serwera.
+Jedyny zasób z zewnątrz to kafle mapy z `tile.openstreetmap.org`. Fonty, Leaflet, React i ReactDOM idą z naszego serwera. Babel nie jest pobierany — runtime sięga po niego tylko gdy w projekcie jest plik `.jsx`, a takiego nie ma.
 
 Pliki fontów pochodzą z gstatic (nie z Fontsource) — builda Fontsource rysuje tekst o 7,3% szerzej. Jeśli kiedyś trzeba je odtworzyć, otwórz `font-fetch.html` na wdrożonej stronie.
 

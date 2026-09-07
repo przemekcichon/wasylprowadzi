@@ -7,6 +7,13 @@ Statyczna strona jednostronicowa. Bez build stepu — Cloudflare Pages serwuje p
 - `support.js` — runtime renderujący szablon
 - `wasyl-map.js` — komponent mapy (Leaflet + kafle OpenStreetMap)
 - `img/` — zdjęcia (WebP, przeskalowane)
+- `vendor/leaflet/` — Leaflet 1.9.4 (js, css, images), hostowany lokalnie
+- `fonts/` — 14 plików woff2 pobranych wprost z Google Fonts (EB Garamond 400/500/600 + 400 italic, Barlow 400/500/600; podzbiory latin i latin-ext), licencja OFL
+- `font-test.html`, `font-fetch.html` — strony pomocnicze, nie część serwisu; można usunąć
+
+Jedyny zasób z zewnątrz to kafle mapy z `tile.openstreetmap.org`. Fonty i Leaflet idą z naszego serwera.
+
+Pliki fontów pochodzą z gstatic (nie z Fontsource) — builda Fontsource rysuje tekst o 7,3% szerzej. Jeśli kiedyś trzeba je odtworzyć, otwórz `font-fetch.html` na wdrożonej stronie.
 
 ## Lokalnie
 Otwórz przez serwer statyczny, nie przez `file://`:
@@ -28,3 +35,4 @@ Każdy push na główną gałąź = nowy deploy. Pull requesty dostają własne 
 - zdjęcia cerkwi i cmentarza wojennego
 - proofreading EN/FR
 - uściślenie zarysu obszaru na mapie
+- rozważyć Protomaps + Cloudflare R2, żeby i kafle mapy szły z naszej domeny

@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  // React i ReactDOM z własnego serwera zamiast z unpkg (runtime czyta tę mapę)
+  window.__resources = {
+    'https://unpkg.com/react@18.3.1/umd/react.production.min.js': 'vendor/react/react.production.min.js',
+    'https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js': 'vendor/react/react-dom.production.min.js'
+  };
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -543,7 +550,7 @@ const I18N = {
         ['Hosting i ochrona', 'Strona jest hostowana w Cloudflare Pages, a ruch przechodzi przez sieć Cloudflare wraz z zaporą aplikacyjną (WAF), która blokuje ataki i nadużycia. Cloudflare przetwarza przy tym adres IP, typ przeglądarki i podobne dane techniczne — jest to niezbędne do dostarczenia i zabezpieczenia strony.'],
         ['Statystyki', 'Do liczenia odwiedzin używam Cloudflare Web Analytics. Narzędzie nie zapisuje ciasteczek, nie tworzy profili i nie śledzi cię między stronami — pokazuje wyłącznie zbiorcze liczby odsłon i źródła wejść.'],
         ['Ciasteczka i pamięć przeglądarki', 'Strona nie używa ciasteczek reklamowych ani analitycznych. W pamięci przeglądarki zapisywany jest tylko wybrany język (klucz „wasyl-lang”), żeby przy kolejnej wizycie strona otworzyła się w tej samej wersji.'],
-        ['Zasoby zewnętrzne', 'Kroje pisma i biblioteka mapy Leaflet są hostowane razem ze stroną, więc nie łączysz się przy tym z żadnym zewnętrznym serwerem. Jedynym zasobem z zewnątrz są kafle mapy z OpenStreetMap — wczytują się dopiero przy przewinięciu do sekcji z mapą i oznaczają przekazanie twojego adresu IP fundacji OpenStreetMap.'],
+        ['Zasoby zewnętrzne', 'Kroje pisma i biblioteki (mapa, interfejs) są hostowane razem ze stroną, więc nie łączysz się przy tym z żadnym zewnętrznym serwerem. Jedynym zasobem z zewnątrz są kafle mapy z OpenStreetMap — wczytują się dopiero przy przewinięciu do sekcji z mapą i oznaczają przekazanie twojego adresu IP fundacji OpenStreetMap.'],
         ['Twoje prawa', 'Masz prawo do dostępu do swoich danych, ich sprostowania, usunięcia i ograniczenia przetwarzania oraz do sprzeciwu. Wystarczy e-mail. Skargę możesz złożyć do Prezesa Urzędu Ochrony Danych Osobowych.']
       ]
     },
@@ -629,7 +636,7 @@ const I18N = {
         ['Hosting and protection', 'The site is hosted on Cloudflare Pages and traffic passes through the Cloudflare network together with its web application firewall (WAF), which blocks attacks and abuse. In doing so Cloudflare processes your IP address, browser type and similar technical data, which is necessary to deliver and secure the site.'],
         ['Statistics', 'Visits are counted with Cloudflare Web Analytics. It sets no cookies, builds no profiles and does not track you across sites — it only shows aggregate page views and referrers.'],
         ['Cookies and browser storage', 'The site uses no advertising or analytics cookies. The only thing stored in your browser is the chosen language (the key “wasyl-lang”), so that the site opens in the same version on your next visit.'],
-        ['Third-party resources', 'The typefaces and the Leaflet map library are hosted alongside the site, so loading them involves no external server. The only third-party resource is the map tiles from OpenStreetMap — they load only when you scroll to the map section, and loading them passes your IP address to the OpenStreetMap Foundation.'],
+        ['Third-party resources', 'The typefaces and the libraries (map, interface) are hosted alongside the site, so loading them involves no external server. The only third-party resource is the map tiles from OpenStreetMap — they load only when you scroll to the map section, and loading them passes your IP address to the OpenStreetMap Foundation.'],
         ['Your rights', 'You have the right to access your data, to correct, erase or restrict its processing and to object. An email is enough. You may also lodge a complaint with the Polish data protection authority (UODO).']
       ]
     },
@@ -715,7 +722,7 @@ const I18N = {
         ['Hébergement et protection', 'Le site est hébergé sur Cloudflare Pages et le trafic passe par le réseau Cloudflare avec son pare-feu applicatif (WAF), qui bloque les attaques et les abus. Cloudflare traite à cette occasion votre adresse IP, le type de navigateur et des données techniques similaires, nécessaires à la diffusion et à la sécurité du site.'],
         ['Statistiques', 'Les visites sont comptées avec Cloudflare Web Analytics. L’outil ne dépose pas de cookies, ne crée pas de profils et ne vous suit pas d’un site à l’autre — il n’affiche que des totaux de pages vues et de sources de trafic.'],
         ['Cookies et stockage local', 'Le site n’utilise aucun cookie publicitaire ou analytique. Seule la langue choisie est conservée dans votre navigateur (clé « wasyl-lang »), afin que le site s’ouvre dans la même version à votre prochaine visite.'],
-        ['Ressources externes', 'Les polices et la bibliothèque cartographique Leaflet sont hébergées avec le site : leur chargement ne fait appel à aucun serveur externe. La seule ressource externe reste les tuiles cartographiques d’OpenStreetMap — elles ne se chargent qu’au moment où vous atteignez la section carte, et transmettent alors votre adresse IP à la Fondation OpenStreetMap.'],
+        ['Ressources externes', 'Les polices et les bibliothèques (carte, interface) sont hébergées avec le site : leur chargement ne fait appel à aucun serveur externe. La seule ressource externe reste les tuiles cartographiques d’OpenStreetMap — elles ne se chargent qu’au moment où vous atteignez la section carte, et transmettent alors votre adresse IP à la Fondation OpenStreetMap.'],
         ['Vos droits', 'Vous avez le droit d’accéder à vos données, de les rectifier, de les effacer, d’en limiter le traitement et de vous y opposer. Un e-mail suffit. Vous pouvez également saisir l’autorité polonaise de protection des données (UODO).']
       ]
     },

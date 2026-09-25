@@ -16,10 +16,10 @@
 <x-dc>
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wasyl prowadzi — spersonalizowane wycieczki po Beskidzie Niskim i Łemkowszczyźnie</title>
-<meta name="description" content="Spersonalizowane wycieczki po Beskidzie Niskim, Łemkowszczyźnie i okolicach. Od jednego popołudnia do trzech dni, od 1 do 5 osób. Prowadzi Franciszek Wasyl — historyk i mieszkaniec regionu.">
-<meta property="og:title" content="Wasyl prowadzi — wycieczki po Beskidzie Niskim i Łemkowszczyźnie">
-<meta property="og:description" content="Wiedza, humor, frajda. Trasa układana pod ciebie przez historyka, który tu mieszka.">
+<title>Wasyl prowadzi — Beskid Niski i okolice. Wycieczki z historykiem</title>
+<meta name="description" content="Beskid Niski i okolice. Wycieczki z historykiem — wiedza, humor, frajda. Od jednego popołudnia do trzech dni, od 1 do 5 osób. Prowadzi Franciszek Wasyl, historyk i przewodnik.">
+<meta property="og:title" content="Wasyl prowadzi — Beskid Niski i okolice. Wycieczki z historykiem">
+<meta property="og:description" content="Wiedza, humor, frajda. Trasa układana indywidualnie przez historyka, który tu mieszka.">
 <meta property="og:image" content="/img/mgla-nad-grzbietami.webp">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pl_PL">
@@ -40,6 +40,13 @@
   @font-face { font-family: 'Barlow'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/barlow-500-normal-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
   @font-face { font-family: 'Barlow'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/barlow-600-normal-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
   @font-face { font-family: 'Barlow'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/barlow-600-normal-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: 'Inter'; font-style: italic; font-weight: 400 600; font-display: swap; src: url('fonts/inter-var-italic-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: 'Inter'; font-style: italic; font-weight: 400 600; font-display: swap; src: url('fonts/inter-var-italic-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url('fonts/inter-var-normal-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url('fonts/inter-var-normal-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  [data-font="sans"][style*="EB Garamond"], [data-font="sans"] [style*="EB Garamond"] { font-family: 'Inter', system-ui, sans-serif !important; }
+  [data-font="sans"] h1, [data-font="sans"] h2, [data-font="sans"] h3 { font-weight: 500 !important; letter-spacing: -0.03em !important; }
+  [data-font="sans"] p, [data-font="sans"] li { letter-spacing: -0.006em; }
 </style>
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <script src="vendor/leaflet/leaflet.js"></script>
@@ -55,7 +62,7 @@
 </style>
 </helmet>
 
-<div style="font-family: 'EB Garamond', Georgia, serif; background: #FAF8F4; min-height: 100vh;">
+<div data-font="{{ fontV }}" style="font-family: 'EB Garamond', Georgia, serif; background: #FAF8F4; min-height: 100vh;">
 
   <nav style="position: fixed; inset: 0 auto 0 0; width: 88px; z-index: 50; display: {{ railDisplay }}; flex-direction: column; align-items: center; gap: {{ navGap }}; padding: 18px 0 16px; background: #FAF8F4; border-right: 1px solid rgba(27,33,29,0.12);" style-hover="background: #FAF8F4">
     <a href="#top" title="{{ t.portraitTitle }}" style="display: block; width: {{ avatarSize }}; height: {{ avatarSize }}; border-radius: 999px; overflow: hidden; border: 1px solid rgba(27,33,29,0.18); box-shadow: 0 2px 10px -6px rgba(27,33,29,0.5); flex: 0 0 auto;">
@@ -87,6 +94,18 @@
           <sc-for list="{{ moreItems }}" as="m" hint-placeholder-count="2">
             <a href="{{ m.href }}" onClick="{{ closeMore }}" style="padding: 10px 12px; border-radius: 5px; font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; color: #2A312C; text-decoration: none;" style-hover="background: rgba(14,82,54,0.07); color: #0E5236">{{ m.label }}</a>
           </sc-for>
+            <div style="height: 1px; margin: 6px 6px; background: rgba(27,33,29,0.12);"></div>
+            <p style="margin: 6px 12px 2px; font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #E8891B;">Podgląd wariantów</p>
+            <sc-for list="{{ previewRows }}" as="r" hint-placeholder-count="2">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 5px 12px;">
+                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 12.5px; font-weight: 500; color: #3C443D;">{{ r.label }}</span>
+                <div style="display: flex; gap: 2px; padding: 2px; border: 1px solid rgba(27,33,29,0.16); border-radius: 999px;">
+                  <sc-for list="{{ r.opts }}" as="o" hint-placeholder-count="2">
+                    <button onClick="{{ o.pick }}" style="min-height: 26px; padding: 0 10px; border: 0; border-radius: 999px; cursor: pointer; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; background: {{ o.bg }}; color: {{ o.color }};">{{ o.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
         </div>
       </sc-if>
     </div>
@@ -149,12 +168,33 @@
     </header>
 
     <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{ heroBand }}" hint-placeholder-val="{{ false }}">
+    <section style="position: relative; display: flex; align-items: flex-end; min-height: {{ bandH }}; overflow: hidden; background: #1B211D;">
+      <img src="img/mgla-nad-grzbietami.webp" alt="{{ t.heroAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%;">
+      <div style="position: absolute; inset: 0; background: rgba(14,22,17,0.44);"></div>
+      <div style="position: relative; width: 100%; max-width: 1280px; margin: 0 auto; padding: {{ bandPad }};">
+        <h1 style="margin: 0; max-width: 15ch; font-size: clamp(44px, 7vw, 86px); font-weight: 400; line-height: 1.02; letter-spacing: -0.02em; color: #FAF8F4; text-wrap: balance;"><span style="display: block;">{{ t.heroH1 }}</span><span style="display: block; font-style: italic; color: #E8891B;">{{ t.heroH1b }}</span></h1>
+        <p style="margin: 28px 0 0; display: inline-flex; align-items: center; gap: 14px; font-size: 24px; font-style: italic; color: #FAF8F4;"><span style="width: 34px; height: 1px; background: #E8891B;"></span>{{ t.tagline }}</p>
+      </div>
+    </section>
+    <section style="max-width: 1280px; margin: 0 auto; padding: {{ bandBelowPad }};">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px 64px;">
+        <img src="img/logotyp-wasylprowadzi.webp" alt="Wasyl prowadzi" style="display: block; width: {{ bandLogoW }}; max-width: 100%; height: auto; margin-left: -8px; mix-blend-mode: multiply;">
+        <p style="margin: 0; max-width: 42ch; font-size: 20px; line-height: 1.6; color: #3C443D;">{{ t.heroLead }}</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; margin-top: 36px; padding-top: 20px; border-top: 1px solid rgba(27,33,29,0.16);">
+        <p style="margin: 0; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase; color: #6E7269;">{{ t.kicker }}</p>
+        <a href="#historia" style="font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">{{ t.startLink }}</a>
+      </div>
+    </section>
+    </sc-if>
+    <sc-if value="{{ heroClassic }}" hint-placeholder-val="{{ true }}">
     <section style="max-width: 1280px; margin: 0 auto; padding: {{ heroPad }};">
       <div style="display: grid; grid-template-columns: {{ heroCols }}; gap: {{ heroGap }}; align-items: end;">
 
         <div>
           <img src="img/logotyp-wasylprowadzi.webp" alt="Wasyl prowadzi" style="display: block; width: {{ heroLogoW }}; max-width: 100%; height: auto; margin: 0 0 40px -8px; mix-blend-mode: multiply;">
-          <h1 style="margin: 0; font-size: clamp(40px, 5.6vw, 74px); font-weight: 400; line-height: 1.04; letter-spacing: -0.018em; text-wrap: pretty;">{{ t.heroH1 }}</h1>
+          <h1 style="margin: 0; font-size: clamp(40px, 5.6vw, 74px); font-weight: 400; line-height: 1.04; letter-spacing: -0.018em; text-wrap: pretty;"><span style="display: block;">{{ t.heroH1 }}</span><span style="display: block; font-style: italic; color: #0E5236;">{{ t.heroH1b }}</span></h1>
           <p style="margin: 30px 0 0; display: inline-flex; align-items: center; gap: 14px; font-size: 24px; font-style: italic; color: #0E5236;"><span style="width: 34px; height: 1px; background: #E8891B;"></span>{{ t.tagline }}</p>
         </div>
 
@@ -169,6 +209,7 @@
         <a href="#historia" style="font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">{{ t.startLink }}</a>
       </div>
     </section>
+    </sc-if>
 
     <section id="historia" style="border-top: 1px solid rgba(27,33,29,0.12); padding: 84px {{ sidePad }};">
       <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 56px;">
@@ -194,7 +235,7 @@
           </div>
         </div>
         <div style="max-width: 60ch;">
-          <p style="margin: 0 0 24px; font-size: 21px; line-height: 1.62; color: #2A312C;">{{ t.s2p1 }}</p>
+          <p style="margin: 0 0 24px; font-size: 21px; line-height: 1.62; color: #2A312C;">{{ t.s2p1 }}<a href="https://brill.com/display/title/57625?rskey=n7QyZg&amp;result=7" target="_blank" rel="noopener" style="color: #0E5236; text-decoration: underline; text-decoration-color: #E8891B; text-underline-offset: 3px;" style-hover="color: #E8891B">{{ t.s2link }}</a>{{ t.s2p1b }}</p>
           <p style="margin: 0 0 32px; font-size: 21px; line-height: 1.62; color: #2A312C;">{{ t.s2p2 }}</p>
           <p style="margin: 0; font-size: 20px; font-style: italic; line-height: 1.6; color: #0E5236; border-left: 2px solid #E8891B; padding-left: 20px;">{{ t.s2quote }}</p>
         </div>
@@ -409,6 +450,18 @@
             <sc-for list="{{ moreItems }}" as="m" hint-placeholder-count="2">
               <a href="{{ m.href }}" onClick="{{ closeMore }}" style="display: flex; align-items: center; min-height: 52px; padding: 0 12px; border-radius: 6px; font-family: Barlow, system-ui, sans-serif; font-size: 15px; font-weight: 500; color: #2A312C; text-decoration: none;" style-hover="background: rgba(14,82,54,0.07)">{{ m.label }}</a>
             </sc-for>
+            <div style="height: 1px; margin: 6px 4px; background: rgba(27,33,29,0.12);"></div>
+            <p style="margin: 6px 12px 2px; font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #E8891B;">Podgląd wariantów</p>
+            <sc-for list="{{ previewRows }}" as="r" hint-placeholder-count="2">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 12px;">
+                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 14px; font-weight: 500; color: #3C443D;">{{ r.label }}</span>
+                <div style="display: flex; gap: 2px; padding: 2px; border: 1px solid rgba(27,33,29,0.16); border-radius: 999px;">
+                  <sc-for list="{{ r.opts }}" as="o" hint-placeholder-count="2">
+                    <button onClick="{{ o.pick }}" style="min-height: 40px; padding: 0 14px; border: 0; border-radius: 999px; cursor: pointer; font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; background: {{ o.bg }}; color: {{ o.color }};">{{ o.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
           </div>
         </div>
       </sc-if>
@@ -419,57 +472,57 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;showGallery&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 const TRAILS_PL = [
-  ['RED CROSS', 'szlak cmentarzy I wojny światowej', 'Zapomniane cmentarze wojenne z lat 1914–1915 — projektowane przez architektów z całej monarchii, dziś rozsiane po grzbietach i wsiach. Kto tu leży, kto to zbudował i dlaczego akurat tutaj.'],
-  ['CZARNE ZŁOTO', 'szlak naftowy', 'Kolebka światowego przemysłu naftowego: kopanki, pierwsze szyby, resztki infrastruktury i losy ludzi, którzy z ropy zrobili tu majątki.'],
-  ['WINNE KLIMATY', 'szlak tradycji winiarskich Podkarpacia', 'Winiarska historia regionu — od średniowiecznego handlu węgierskim winem po dzisiejsze podkarpackie winnice. Z degustacją, jeśli chcesz.'],
-  ['SZWEJKOWE', 'szlak piwny', 'Galicja od strony karczmy i browaru: austro-węgierskie porządki, dobre anegdoty i przystanki, w których da się to wszystko przetestować.'],
-  ['DREWNIANY ŚWIAT', 'szlak architektury cerkiewnej i drewnianej', 'Cerkwie, kościoły i chyże — jak je czytać, czym różni się cerkiew łemkowska od bojkowskiej i co się z nimi stało po 1947 roku.'],
-  ['BESKIDZKIE KAPLICZKI', 'szlak krzyży i kapliczek', 'Przydrożne kapliczki i krzyże jako zapis lokalnej pamięci: prośby, podziękowania, epidemie, granice pól i wsi.'],
-  ['DWORSKI ZAŚCIANEK', 'szlak ziemiański', 'Dwory, parki i rodziny, które rządziły tu przez pokolenia — i to, co po nich zostało.'],
-  ['RUSIŃSKIE BEZDROŻA', 'szlak łemkowski', 'Łemkowszczyzna: język, wiara, gospodarka i wysiedlenia. Wsie, których nie ma, i te, które wróciły do życia.'],
-  ['WIĘCEJ NIŻ SZTETL', 'szlak tradycji żydowskiej', 'Żydowskie miasteczka Podkarpacia — synagogi, kirkuty, rynki i handel, który je napędzał.'],
-  ['TRAKT MADZIARSKI', 'szlak węgierski', 'Stare drogi na południe: przemyt, kupcy, wojsko i węgierskie ślady po obu stronach przełęczy.'],
-  ['GALICJA', 'szlak miasteczek galicyjskich', 'Rynki, ratusze, urzędy i obyczaje c.k. prowincji — jak wyglądało życie w galicyjskim miasteczku.'],
-  ['TROPEM RYSIA', 'szlak przyrodniczy', 'Puszcza Karpacka od strony zwierząt i śladów: ryś, wilk, żubr, bocian czarny. Cicho i uważnie.'],
-  ['BUKOWA KRAINA', 'szlakiem drzew i pomników przyrody', 'Stare buczyny, pomnikowe drzewa i miejsca, gdzie las przejął z powrotem to, co było wsią.'],
-  ['OD KAMIENIA DO SZKŁA', 'szlak rzemiosła', 'Kamieniarze, hutnicy szkła, garncarze, tkacze — dawne warsztaty i to, co po nich widać w krajobrazie.'],
-  ['PSIM WĘCHEM', 'wycieczki z czworonogami', 'Trasy zaplanowane pod psa: tempo, woda, cień i miejsca, gdzie czworonóg jest naprawdę mile widziany.']
+  ["RED CROSS", "szlak cmentarzy I wojny światowej", "Cmentarze wojenne z lat 1914–1915 — miejsca pamięci rozsiane po górskich grzbietach i wsiach. Przywróćmy im historyczny kontekst, a pochowanym tam żołnierzom — nazwiska, pochodzenie i ich własne historie."],
+  ["CZARNE ZŁOTO", "szlak naftowy", "Kto sprawił, że na ulicach i w domach rozbłysło światło? Kto oddał ludziom wieczór i noc? Co łączy lampę naftową z wynalezieniem mlecznej czekolady? Odkryj ze mną na nowo historię przemysłu naftowego w okolicach Krosna — ludzi, wynalazki i miejsca, od których wszystko się zaczęło."],
+  ["POLSKA BURGUNDIA", "szlak tradycji winiarskich Podkarpacia", "Odkryj winne klimaty regionu jasielskiego. Czy wiesz, że temperatury współczesnego lata pod Jasłem przypominają te notowane sto lat temu w Burgundii? Odwiedzimy miejscowe winnice, a po drodze opowiem Ci o zmianach klimatu, dawnych tradycjach winiarskich i czasach, kiedy na tutejszych stołach królowało wino, a nie piwo. Czy te czasy powrócą?"],
+  ["SZWEJKOWE", "szlak piwny", "W Grybowie, w firmowym sklepie regionalnego browaru, możemy napić się Szwejkowego. Przy kuflu opowiem Ci o galicyjskim browarnictwie — od Goetzów-Okocimskich po małe, regionalne browary. Sprawdzimy też, jak to się stało, że niewielki browar w Grybowie trafił do Żółtego Przewodnika Gault&Millau Polska. A przy kuflu, zaprawieni w historii, „rozbroimy” ów szwejkowy mit Galicji."],
+  ["DREWNIANY ŚWIAT", "szlak architektury cerkiewnej i drewnianej", "Drewniane cerkwie, chyże i domostwa to jedne z najbardziej charakterystycznych elementów tej krainy. Możemy je razem nie tylko zobaczyć, ale też dotknąć i powąchać. Tak, powąchać — bo kadzidło i olej ziemny zostawiły swój zapach w starych drewnianych belkach. Zaczniemy więc od drewna, zapachu i dotyku, a skończymy na architekturze sakralnej, religiach, wyznaniach, obrządkach i tożsamościach ludzi, którzy te miejsca tworzyli."],
+  ["BESKIDZKIE KAPLICZKI", "szlak krzyży i kapliczek", "Świat rozsianych kapliczek to prawdziwy mikroświat sacrum Beskidu Niskiego. Wiary sprowadzonej do codzienności - trudu w domach, na łąkach i polach, przy drogach. Zwykle dostrzegamy tylko nieliczne; większość mijamy, nie wiedząc, dlaczego stanęły właśnie w tym miejscu. Proponuję Ci wyprawę w głąb tego mikroświata, podczas której spróbujemy odczytać zapisy lokalnej pamięci: prośby i podziękowania, ślady dramatycznych wydarzeń, granice pól i wsi."],
+  ["DWORSKI ZAŚCIANEK", "szlak ziemiański", "Beskid Niski i jego okolice to także świat szlacheckiego zaścianka — dworów, parków i ziemiańskich majątków. Niektóre dwory przetrwały, inne zamieniono w szkoły, urzędy i gospodarstwa, po jeszcze innych zostały tylko stare drzewa i ślady w krajobrazie. Poszukajmy ich razem. Przyjrzyjmy się ich metamorfozom, ale przede wszystkim ludziom, którzy w nich mieszkali. Kim byli? Jak żyli? Co się z nimi stało i co pozostało po ich świecie?"],
+  ["RUSIŃSKIE BEZDROŻA", "szlak łemkowski", "Łemkowszczyzna - mityczna kraina dawnych pasterzy, jeden z emblematów Beskidu Niskiego. Przejdźmy ich drogami, zajrzyjmy do dawnych obejść, drewnianych cerkwi, chyż i na cmentarze. A potem odłóżmy na bok mit Łemkowszczyzny i przyjrzyjmy się jej historii. Kim byli Łemkowie? Jak naprawdę żyli? Co ich łączyło i dzieliło z sąsiadami? I co stało się ze światem, który tutaj stworzyli?"],
+  ["WIĘCEJ NIŻ SZTETL", "szlak tradycji żydowskiej", "Historia Żydów Beskidu Niskiego i jego okolic to znacznie więcej niż opowieść o galicyjskim sztetlu. Zobaczymy, gdzie i dlaczego osiedlali się Żydzi, z czego żyli, jak funkcjonowały ich gminy i jaką rolę odgrywały w nich kobiety. Zajrzymy na rynki dawnych miasteczek, do synagog i na kirkuty, szukając śladów świata, który przez stulecia był częścią tutejszej codzienności. Opowiem Ci również o końcu tego świata. Końcu - i nowym początku."],
+  ["TRAKT MADZIARSKI", "szlak węgierski", "Gdyby ktoś chciał stworzyć muzeum drogi, gdzie powinno się znaleźć? Ja wiem. Szlak Madziarski to opowieść o dawnym gościńcu we wszystkich jego odsłonach: o architekturze i infrastrukturze drogi, sposobach podróżowania i transportu, ale też o całej kulturze ludzi będących w drodze. O kupcach, podróżnych i woźnicach, o przewożonych towarach, noclegach i karczmach. A skoro droga - to karczma. Skoro karczma - to wino. A skoro wino, to przecież trzeba też coś zjeść."],
+  ["GALICJA", "szlak miasteczek galicyjskich", "Przyjrzyjmy się kolejnemu, może jednemu z najsilniejszych mitów regionu - mitowi galicyjskiej prowincji. Czym właściwie była Galicja? Kiedy powstała i co pozostało po niej do dziś? Poszukajmy odpowiedzi w terenie: w budynkach i architekturze, drogach, instytucjach, lokalnych inicjatywach, kuchni, ale też w wydarzeniach, które zmieniały życie jej mieszkańców. Spróbujmy oddzielić Galicję zapamiętaną i wyobrażoną od Galicji historycznej."],
+  ["TROPEM RYSIA", "szlak przyrodniczy", "Nasz region Karpat od strony przyrodniczej. Uzbrojeni w lornetki przemierzymy lasy i łąki tropem rysia. Spojrzymy też w niebo w poszukiwaniu jednego z symboli Beskidu Niskiego – orlika krzykliwego. Gwoździem programu będzie – bo nie może być inaczej – Ośrodek Edukacyjno-Muzealny im. Jana Szafrańskiego Magurskiego Parku Narodowego."],
+  ["BUKOWA KRAINA", "szlakiem drzew i pomników przyrody", "Bukowa kraina to opowieść o „srebrnych jeźdźcach” – karpackich bukach, gospodarzach tutejszych lasów. Ale obok nich pojawią się dostojne lipy przy kapliczkach i dęby na rozstajach dróg. Będziemy też szukać jesionów, które powoli znikają z beskidzkiego krajobrazu."],
+  ["OD KAMIENIA DO SZKŁA", "szlak rzemiosła", "Rzemiosło, podobnie jak język czy religia, nadawało kiedyś ludziom tożsamość. Nieprzypadkowo w języku polskim tak wiele nazwisk wywodzi się od dawnych zawodów: Kowalczyk, Piekarz, Winiarz czy Stolarczyk. Podobnie było z miastami - także z Krosnem, którego historia jest nierozerwalnie związana z rzemiosłem. Warto więc wrócić nie tylko do miejsc, ale również do przedmiotów i narzędzi - śladów pracy, która przez stulecia określała ludzi, rodziny i całe miejskie społeczności."],
+  ["PSIM WĘCHEM", "wycieczki z czworonogami", "Pies też jedzie. Trasę planujemy również z myślą o nim: odpowiednie tempo, woda, cień i trochę psiej radości. A jeśli wybieramy się tam, gdzie psa nie można wprowadzić (np. do Magurskiego Parku Narodowego), Twój kompan poczeka na Ciebie pod dobrą opieką — w psim hotelu z opieką całodobową."]
 ];
 
 const TRAILS_EN = [
-  ['RED CROSS', 'trail of the First World War cemeteries', 'Forgotten war cemeteries from 1914–1915 — designed by architects from all over the monarchy, now scattered across ridges and villages. Who lies here, who built them and why in this particular place.'],
-  ['CZARNE ZŁOTO', 'the oil trail', 'The cradle of the world oil industry: hand-dug pits, the first wells, the remains of the infrastructure and the fates of the people who made fortunes here from crude oil.'],
-  ['WINNE KLIMATY', 'trail of Subcarpathian winemaking traditions', 'The wine history of the region — from the medieval trade in Hungarian wine to today’s Subcarpathian vineyards. With a tasting, if you like.'],
-  ['SZWEJKOWE', 'the beer trail', 'Galicia seen from the inn and the brewery: Austro-Hungarian order, good anecdotes and stops where all of it can be put to the test.'],
-  ['DREWNIANY ŚWIAT', 'trail of wooden and Eastern-rite church architecture', 'Greek Catholic churches, Roman Catholic churches and chyże cottages — how to read them, how a Lemko church differs from a Boyko one and what became of them after 1947.'],
-  ['BESKIDZKIE KAPLICZKI', 'trail of crosses and wayside shrines', 'Wayside shrines and crosses as a record of local memory: requests, thanksgivings, epidemics, the boundaries of fields and villages.'],
-  ['DWORSKI ZAŚCIANEK', 'the landed gentry trail', 'Manor houses, parks and the families that ruled here for generations — and what is left of them.'],
-  ['RUSIŃSKIE BEZDROŻA', 'the Lemko trail', 'Lemko country: language, faith, farming and the deportations. Villages that are gone, and those that have come back to life.'],
-  ['WIĘCEJ NIŻ SZTETL', 'trail of Jewish heritage', 'The Jewish towns of Subcarpathia — synagogues, cemeteries, market squares and the trade that drove them.'],
-  ['TRAKT MADZIARSKI', 'the Hungarian trail', 'The old roads south: smuggling, merchants, armies and Hungarian traces on both sides of the pass.'],
-  ['GALICJA', 'trail of Galician towns', 'Market squares, town halls, offices and the customs of an imperial-royal province — what life in a Galician town looked like.'],
-  ['TROPEM RYSIA', 'the nature trail', 'The Carpathian forest seen through its animals and their traces: lynx, wolf, bison, black stork. Quietly and attentively.'],
-  ['BUKOWA KRAINA', 'trail of trees and natural monuments', 'Old beech woods, monumental trees and places where the forest has taken back what used to be a village.'],
-  ['OD KAMIENIA DO SZKŁA', 'the crafts trail', 'Stonemasons, glassmakers, potters, weavers — the old workshops and what can still be seen of them in the landscape.'],
-  ['PSIM WĘCHEM', 'trips with four-legged companions', 'Routes planned around the dog: pace, water, shade and places where a four-legged guest is genuinely welcome.']
+  ["RED CROSS", "trail of the First World War cemeteries", "First World War cemeteries from 1914–1915 — places of remembrance scattered across mountain ridges and villages. Let us restore their historical context and give the soldiers buried there back their names, origins and individual stories."],
+  ["CZARNE ZŁOTO", "the oil trail", "Who made the lights come on in our streets and homes? Who gave people back their evenings and nights? What does the oil lamp have to do with the invention of milk chocolate? Join me in rediscovering the history of the oil industry around Krosno — the people, inventions and places where it all began."],
+  ["POLSKA BURGUNDIA", "trail of Subcarpathian winemaking traditions", "Discover the wine country around Jasło. Did you know that summer temperatures in the Jasło area today resemble those recorded in Burgundy a century ago? We will visit local vineyards, and along the way I will tell you about climate change, the region’s old winemaking traditions, and the days when wine, rather than beer, reigned on local tables. Could those days be coming back?"],
+  ["SZWEJKOWE", "the beer trail", "In Grybów, we can stop by the local brewery shop for a glass of Szwejkowe beer. Over a pint, I will tell you about the history of brewing in Galicia — from the Goetz-Okocimski family to small regional breweries. We will also find out how a small brewery in Grybów made its way into the Polish Gault&Millau Yellow Guide. And while we are there, steeped in history, we will “disarm” the Švejk-inspired myth of Galicia."],
+  ["DREWNIANY ŚWIAT", "trail of wooden and Eastern-rite church architecture", "Wooden churches, traditional chyże houses and homesteads are among the most distinctive features of this region. Together, we can not only see them, but also touch and smell them. Yes, smell them — because incense and crude oil have left their scent in the old wooden beams. We will begin with wood, scent and touch, and end with sacred architecture, religions, denominations, rites and the identities of the people who created these places."],
+  ["BESKIDZKIE KAPLICZKI", "trail of crosses and wayside shrines", "The scattered roadside shrines form a true microcosm of the sacred in the Beskid Niski — faith brought into everyday life, into the hardships of home, meadow and field, and along the roadside. We usually notice only a few; most we pass without knowing why they were placed exactly where they are. I invite you to explore this microcosm with me and try to read these traces of local memory: pleas and expressions of gratitude, reminders of dramatic events, and the boundaries of fields and villages."],
+  ["DWORSKI ZAŚCIANEK", "the landed gentry trail", "The Beskid Niski and its surroundings are also a land of old country estates — manor houses, parks and landed properties. Some manor houses have survived; others were turned into schools, offices or farm buildings, while of others only old trees and traces in the landscape remain. Let us seek them out together. We will explore how these places have changed, but above all, we will focus on the people who once lived there. Who were they? How did they live? What happened to them, and what remains of their world today?"],
+  ["RUSIŃSKIE BEZDROŻA", "the Lemko trail", "Łemkowszczyzna — a mythical land of former shepherds and one of the defining symbols of the Beskid Niski. Let us follow their old roads and paths, visit former homesteads, wooden churches, traditional chyże houses and cemeteries. Then let us put the myth of Łemkowszczyzna aside and look at its history. Who were the Lemkos? What was their life really like? What united them with their neighbours, and what set them apart? And what happened to the world they created here?"],
+  ["WIĘCEJ NIŻ SZTETL", "trail of Jewish heritage", "The history of the Jews of the Beskid Niski and its surroundings is about far more than the Galician shtetl. We will explore where and why Jewish communities settled, how they made their living, how their communities functioned, and the role women played within them. We will visit the market squares of old towns, synagogues and Jewish cemeteries, looking for traces of a world that for centuries was part of everyday life here. I will also tell you about the end of that world. An end — and a new beginning."],
+  ["TRAKT MADZIARSKI", "the Hungarian trail", "If someone wanted to create a museum of the road, where should it be? I know exactly where. The Hungarian Route tells the story of an old trade road in all its dimensions: its architecture and infrastructure, the ways people travelled and transported goods, but also the entire culture of life on the road. Merchants, travellers and carters, the goods they carried, places to stay and roadside inns. And where there is a road, there is an inn. Where there is an inn, there is wine. And where there is wine, surely there has to be something to eat."],
+  ["GALICJA", "trail of Galician towns", "Let us take a closer look at another — perhaps one of the most powerful — myths of the region: the myth of provincial Galicia. What exactly was Galicia? When was it created, and what remains of it today? We will look for answers in the landscape: in buildings and architecture, roads and institutions, local initiatives and cuisine, but also in the events that shaped the lives of its inhabitants. Together, we will try to distinguish between Galicia as it is remembered and imagined, and Galicia as it actually existed in history."],
+  ["TROPEM RYSIA", "the nature trail", "The natural side of our corner of the Carpathians. Armed with binoculars, we will explore forests and meadows in search of the elusive lynx. We will also turn our eyes to the sky, looking for one of the symbols of the Beskid Niski — the lesser spotted eagle. And the highlight of the trip — as it could hardly be otherwise — will be the Jan Szafrański Educational and Museum Centre of the Magura National Park."],
+  ["BUKOWA KRAINA", "trail of trees and natural monuments", "Beech Country tells the story of the “silver riders” — the Carpathian beeches, the true masters of these forests. But alongside them, we will encounter stately lime trees standing beside roadside shrines and oaks marking old crossroads. We will also look for ash trees, which are slowly disappearing from the Beskid landscape."],
+  ["OD KAMIENIA DO SZKŁA", "the crafts trail", "Craftsmanship, like language or religion, once helped shape people’s identities. It is no coincidence that so many Polish surnames derive from traditional trades: Kowalczyk, Piekarz, Winiarz or Stolarczyk. The same was true of towns — including Krosno, whose history is inseparably linked with craftsmanship. So it is worth returning not only to the places themselves, but also to the objects and tools — traces of the work that for centuries shaped the identities of individuals, families and entire urban communities."],
+  ["PSIM WĘCHEM", "trips with four-legged companions", "The dog comes too. We plan the route with your four-legged companion in mind: a comfortable pace, water, shade and a little canine fun along the way. And if we are heading somewhere dogs are not allowed (for example, Magura National Park), your companion can wait for you in good hands — at a dog hotel with round-the-clock care."]
 ];
 
 const TRAILS_FR = [
-  ['RED CROSS', 'sentier des cimetières de la Grande Guerre', 'Des cimetières militaires oubliés des années 1914-1915 — dessinés par des architectes venus de toute la monarchie, dispersés aujourd’hui sur les crêtes et dans les villages. Qui repose ici, qui les a construits et pourquoi précisément là.'],
-  ['CZARNE ZŁOTO', 'sentier du pétrole', 'Le berceau de l’industrie pétrolière mondiale : puits creusés à la main, premiers forages, restes d’installations et destins de ceux qui ont fait fortune ici grâce au pétrole.'],
-  ['WINNE KLIMATY', 'sentier des traditions viticoles de Subcarpatie', 'L’histoire viticole de la région — du commerce médiéval du vin hongrois aux vignobles subcarpatiques d’aujourd’hui. Avec dégustation, si vous le souhaitez.'],
-  ['SZWEJKOWE', 'sentier de la bière', 'La Galicie vue de l’auberge et de la brasserie : l’ordre austro-hongrois, de bonnes anecdotes et des étapes pour tout vérifier sur place.'],
-  ['DREWNIANY ŚWIAT', 'sentier de l’architecture en bois et des églises orientales', 'Églises grecques-catholiques, églises latines et chyże — comment les lire, ce qui distingue une église lemko d’une église boyko et ce qu’elles sont devenues après 1947.'],
-  ['BESKIDZKIE KAPLICZKI', 'sentier des croix et des chapelles', 'Chapelles et croix de bord de route comme archives de la mémoire locale : demandes, remerciements, épidémies, limites des champs et des villages.'],
-  ['DWORSKI ZAŚCIANEK', 'sentier de la noblesse terrienne', 'Manoirs, parcs et familles qui ont régné ici pendant des générations — et ce qu’il en reste.'],
-  ['RUSIŃSKIE BEZDROŻA', 'sentier lemko', 'Le pays lemko : langue, foi, économie et déportations. Les villages disparus et ceux qui ont repris vie.'],
-  ['WIĘCEJ NIŻ SZTETL', 'sentier du patrimoine juif', 'Les bourgades juives de Subcarpatie — synagogues, cimetières, places de marché et le commerce qui les faisait vivre.'],
-  ['TRAKT MADZIARSKI', 'sentier hongrois', 'Les vieilles routes vers le sud : contrebande, marchands, armées et traces hongroises des deux côtés du col.'],
-  ['GALICJA', 'sentier des bourgs galiciens', 'Places de marché, hôtels de ville, administrations et usages d’une province impériale — à quoi ressemblait la vie dans un bourg galicien.'],
-  ['TROPEM RYSIA', 'sentier nature', 'La forêt des Carpates du côté des animaux et de leurs traces : lynx, loup, bison, cigogne noire. En silence et avec attention.'],
-  ['BUKOWA KRAINA', 'sentier des arbres et des monuments naturels', 'Vieilles hêtraies, arbres remarquables et lieux où la forêt a repris ce qui était un village.'],
-  ['OD KAMIENIA DO SZKŁA', 'sentier de l’artisanat', 'Tailleurs de pierre, verriers, potiers, tisserands — les ateliers d’autrefois et ce qu’on en voit encore dans le paysage.'],
-  ['PSIM WĘCHEM', 'excursions avec un chien', 'Des itinéraires pensés pour le chien : rythme, eau, ombre et lieux où un compagnon à quatre pattes est vraiment bienvenu.']
+  ["RED CROSS", "sentier des cimetières de la Grande Guerre", "Les cimetières militaires de 1914-1915 — des lieux de mémoire dispersés sur les crêtes et dans les villages. Rendons-leur leur contexte historique, et aux soldats qui y reposent leurs noms, leurs origines et leurs propres histoires."],
+  ["CZARNE ZŁOTO", "sentier du pétrole", "Qui a fait briller la lumière dans les rues et les maisons ? Qui a rendu aux gens leurs soirées et leurs nuits ? Quel rapport entre la lampe à pétrole et l’invention du chocolat au lait ? Redécouvrez avec moi l’histoire de l’industrie pétrolière autour de Krosno — les gens, les inventions et les lieux où tout a commencé."],
+  ["POLSKA BURGUNDIA", "sentier des traditions viticoles de Subcarpatie", "Découvrez le pays du vin autour de Jasło. Saviez-vous que les températures estivales d’aujourd’hui près de Jasło rappellent celles relevées il y a un siècle en Bourgogne ? Nous visiterons des vignobles locaux et, en chemin, je vous parlerai du changement climatique, des anciennes traditions viticoles et de l’époque où le vin, et non la bière, régnait sur les tables d’ici. Ces temps reviendront-ils ?"],
+  ["SZWEJKOWE", "sentier de la bière", "À Grybów, dans la boutique de la brasserie régionale, nous pouvons goûter la Szwejkowe. Autour d’une chope, je vous raconterai l’histoire de la brasserie en Galicie — des Goetz-Okocimski aux petites brasseries régionales. Nous verrons aussi comment une petite brasserie de Grybów est entrée dans le Guide jaune Gault&Millau Pologne. Et, bien imprégnés d’histoire, nous « désamorcerons » le mythe chvéïkien de la Galicie."],
+  ["DREWNIANY ŚWIAT", "sentier de l’architecture en bois et des églises orientales", "Les églises en bois, les chyże et les fermes comptent parmi les éléments les plus caractéristiques de cette région. Ensemble, nous pouvons non seulement les voir, mais aussi les toucher et les sentir. Oui, les sentir — car l’encens et le pétrole brut ont laissé leur odeur dans les vieilles poutres. Nous commencerons donc par le bois, l’odeur et le toucher, pour finir par l’architecture sacrée, les religions, les confessions, les rites et les identités de ceux qui ont créé ces lieux."],
+  ["BESKIDZKIE KAPLICZKI", "sentier des croix et des chapelles", "Les chapelles dispersées forment un véritable microcosme du sacré des Basses Beskides — une foi ramenée au quotidien, au labeur dans les maisons, les prés et les champs, au bord des routes. D’habitude, nous n’en remarquons que quelques-unes ; nous passons devant la plupart sans savoir pourquoi elles se dressent précisément à cet endroit. Je vous propose un voyage au cœur de ce microcosme, pour tenter de lire ces archives de la mémoire locale : prières et remerciements, traces d’événements dramatiques, limites des champs et des villages."],
+  ["DWORSKI ZAŚCIANEK", "sentier de la noblesse terrienne", "Les Basses Beskides et leurs alentours, c’est aussi le monde de la petite noblesse — manoirs, parcs et domaines terriens. Certains manoirs ont survécu, d’autres sont devenus des écoles, des bureaux ou des exploitations agricoles ; d’autres encore n’ont laissé que de vieux arbres et des traces dans le paysage. Partons ensemble à leur recherche. Observons leurs métamorphoses, mais surtout les gens qui y vivaient. Qui étaient-ils ? Comment vivaient-ils ? Que sont-ils devenus et que reste-t-il de leur monde ?"],
+  ["RUSIŃSKIE BEZDROŻA", "sentier lemko", "Le pays lemko — terre mythique d’anciens bergers et l’un des emblèmes des Basses Beskides. Suivons leurs chemins, entrons dans les anciennes fermes, les églises en bois, les chyże et les cimetières. Puis mettons de côté le mythe du pays lemko pour regarder son histoire. Qui étaient les Lemkos ? Comment vivaient-ils vraiment ? Qu’est-ce qui les unissait à leurs voisins et qu’est-ce qui les en séparait ? Et qu’est-il advenu du monde qu’ils avaient créé ici ?"],
+  ["WIĘCEJ NIŻ SZTETL", "sentier du patrimoine juif", "L’histoire des Juifs des Basses Beskides et de leurs alentours va bien au-delà du récit du shtetl galicien. Nous verrons où et pourquoi les Juifs se sont installés, de quoi ils vivaient, comment fonctionnaient leurs communautés et quel rôle y jouaient les femmes. Nous visiterons les places de marché des anciens bourgs, les synagogues et les cimetières juifs, à la recherche des traces d’un monde qui, pendant des siècles, faisait partie du quotidien d’ici. Je vous parlerai aussi de la fin de ce monde. D’une fin — et d’un nouveau commencement."],
+  ["TRAKT MADZIARSKI", "sentier hongrois", "Si l’on voulait créer un musée de la route, où faudrait-il le placer ? Moi, je le sais. Le Trakt Madziarski raconte une ancienne route commerciale sous toutes ses facettes : son architecture et ses infrastructures, les manières de voyager et de transporter les marchandises, mais aussi toute la culture des gens sur la route. Les marchands, les voyageurs et les charretiers, les marchandises transportées, les gîtes et les auberges. Et qui dit route dit auberge. Qui dit auberge dit vin. Et avec le vin, il faut bien aussi manger quelque chose."],
+  ["GALICJA", "sentier des bourgs galiciens", "Penchons-nous sur un autre mythe de la région, peut-être l’un des plus tenaces : celui de la province galicienne. Qu’était au juste la Galicie ? Quand est-elle née et que reste-t-il d’elle aujourd’hui ? Cherchons les réponses sur le terrain : dans les bâtiments et l’architecture, les routes, les institutions, les initiatives locales, la cuisine, mais aussi dans les événements qui ont changé la vie de ses habitants. Essayons de distinguer la Galicie dont on se souvient et qu’on imagine de la Galicie historique."],
+  ["TROPEM RYSIA", "sentier nature", "Notre coin des Carpates côté nature. Munis de jumelles, nous parcourrons forêts et prairies sur la piste du lynx. Nous lèverons aussi les yeux au ciel à la recherche de l’un des symboles des Basses Beskides — l’aigle pomarin. Et le clou du programme — il ne saurait en être autrement — sera le Centre éducatif et muséal Jan Szafrański du Parc national de Magura."],
+  ["BUKOWA KRAINA", "sentier des arbres et des monuments naturels", "Le pays des hêtres raconte l’histoire des « cavaliers d’argent » — les hêtres des Carpates, véritables maîtres de ces forêts. Mais à leurs côtés apparaîtront aussi de majestueux tilleuls près des chapelles et des chênes aux croisées des chemins. Nous chercherons également les frênes, qui disparaissent peu à peu du paysage des Beskides."],
+  ["OD KAMIENIA DO SZKŁA", "sentier de l’artisanat", "L’artisanat, comme la langue ou la religion, donnait autrefois aux gens leur identité. Ce n’est pas un hasard si tant de noms polonais viennent d’anciens métiers : Kowalczyk, Piekarz, Winiarz ou Stolarczyk. Il en allait de même des villes — y compris de Krosno, dont l’histoire est indissociable de l’artisanat. Il vaut donc la peine de revenir non seulement aux lieux, mais aussi aux objets et aux outils — traces d’un travail qui, pendant des siècles, a défini les individus, les familles et des communautés urbaines entières."],
+  ["PSIM WĘCHEM", "excursions avec un chien", "Le chien vient aussi. Nous planifions l’itinéraire en pensant à lui : un rythme adapté, de l’eau, de l’ombre et un peu de joie canine. Et si nous allons là où les chiens ne sont pas admis (par exemple dans le Parc national de Magura), votre compagnon vous attendra entre de bonnes mains — dans un hôtel pour chiens avec surveillance 24 h sur 24."]
 ];
 
 const IDS = ['historia', 'wasyl', 'szlaki', 'mapa', 'opinie', 'kontakt'];
@@ -486,29 +539,32 @@ const SHOTS = [
 
 const I18N = {
   pl: {
-    docTitle: 'Wasyl prowadzi — spersonalizowane wycieczki po Beskidzie Niskim i Łemkowszczyźnie',
+    docTitle: "Wasyl prowadzi — Beskid Niski i okolice. Wycieczki z historykiem",
     nav: ['Historia', 'Wasyl', 'Szlaki', 'Mapa', 'Opinie', 'Kontakt'],
     navAria: 'Nawigacja',
     portraitTitle: 'Franciszek Wasyl — na górę strony',
     portraitCaption: 'Franciszek Wasyl — historyk, autor, przewodnik',
     langTitle: 'Zmień język',
     cta: 'Umów wyprawę',
-    heroH1: 'Spersonalizowane wycieczki po Beskidzie\u00a0Niskim, Łemkowszczyźnie i\u00a0okolicach',
-    tagline: 'wiedza — humor — frajda',
+    heroH1: "Beskid Niski i okolice",
+    heroH1b: "Wycieczki z historykiem",
+    tagline: "wiedza – humor – frajda",
     heroAlt: 'Mgła nad grzbietami Beskidu Niskiego',
     heroLead: 'Od jednego popołudnia do trzech dni. Od jednej do pięciu osób. Trasa układana pod ciebie — przez historyka, który tu mieszka.',
     kicker: 'Beskid Niski · Łemkowszczyzna · Podkarpacie',
     startLink: 'Zacznij od historii ↓',
     s1h: 'Historia',
-    s1p1: 'Ten kawałek Karpat zmieniał mieszkańców, języki i granice częściej niż nazwy na mapach. Łemkowie, Żydzi, Polacy, Węgrzy, galicyjscy urzędnicy i naftowi przedsiębiorcy zostawili tu po sobie cerkwie, cmentarze, kapliczki, szyby wiertnicze i resztki dworów.',
-    s1p2: 'Większość z tego stoi dziś w lesie, bez tablicy i bez podpisu. Właśnie po to jest ta wycieczka — żeby ktoś powiedział, co widzisz.',
+    s1p1: "Ta część Karpat to nie tylko przestrzeń, ale miejsca — obrosłe znaczeniami, pamięcią i emocjami. Krzyżowały się tutaj różne kultury, zmieniały się granice i państwa. Czas odkładał się w krajobrazie jak warstwy skał, pozostawiając konkretne ślady: cerkiew, kościół, synagogę, kirkut, cmentarz wojenny, kapliczkę, dwór, szyb naftowy, gościniec czy układ dawnego galicyjskiego miasteczka.",
+    s1p2: "Nie wszystkie te ślady są dziś oczywiste. Wiele z nich obrosło sentymentalnym mitem, który czasem więcej zasłania, niż wyjaśnia. Podczas naszych wycieczek postaram się pokazać Ci historyczne oblicze tej krainy — nie jego sentymentalny falsyfikat.",
     s2h: 'Kim jest Wasyl?',
-    s2p1: 'Jestem z urodzenia Rzeszowianinem, z wyboru mieszkańcem podnóża Beskidu Niskiego, z zawodu historykiem i popularyzatorem wiedzy o regionie podkarpackim, autorem książek i artykułów o historii etnicznej rejonu Karpat Wschodnich.',
-    s2p2: 'Od lat oprowadzam przyjaciół i gości po okolicy, w której żyję i którą badam jako historyk.',
-    s2quote: 'Dużo humoru, luzu i solidnej wiedzy od historyka i lokalsa w jednym.',
-    s3h: 'Historie, które możemy razem przeżyć',
-    s3p1: 'Indywidualnie zaprojektowane wycieczki po Beskidzie Niskim i terenach podgórskich; z fachowym wprowadzeniem w historię, legendy, ciekawostki i tajemnice regionu, a także smaki i atrakcje. Moje wyprawy to połączenie trekkingu, poznawania dziejów i dziedzictwa regionu, a na koniec dobrej biesiady.',
-    s3p2: 'W programie ważne miejsca, ludzie, opowieści, lokalne smakołyki i wszystko, czego dusza zapragnie.',
+    s2p1: "Jestem z urodzenia Rzeszowianinem, z wyboru mieszkańcem podnóża Beskidu Niskiego, z zawodu historykiem i przewodnikiem. Od blisko 20 lat zajmuję się historią Karpat i ich mieszkańców. Mam doktorat z historii, jestem autorem ",
+    s2link: "książek i artykułów",
+    s2p1b: " poświęconych historii etnicznej Karpat Wschodnich.",
+    s2p2: "Od lat oprowadzam przyjaciół i gości po okolicy, w której mieszkam i którą badam jako historyk. Chcę pokazywać ją tak, jak sam lubię ją poznawać - bez upiększeń i gotowych opowieści, za to z ciekawością, humorem i solidną wiedzą.",
+    s2quote: "Historyk i lokals w jednym. Dużo wiedzy, trochę humoru i żadnych legend udających historię.",
+    s3h: "Historie, które możemy razem poznać",
+    s3p1: "Indywidualnie przygotowane wycieczki po Beskidzie Niskim i jego okolicach. Łączę w nich wędrówkę z poznawaniem historii, ludzi i miejsc, które ukształtowały ten region. Zaglądamy do cerkwi i kościołów, na cmentarze i kirkuty, odwiedzamy dawne miasteczka, wsie i miejsca, których znaczenia nie zawsze można dostrzec na pierwszy rzut oka.",
+    s3p2: "Nie samą historią jednak człowiek żyje. Po drodze znajdzie się czas na dobry widok, lokalne smaki, winne klimaty i spotkania z ciekawymi ludźmi, a jeśli mamy ochotę — także na porządną biesiadę. Trasę układam indywidualnie, zależnie od tego, co Cię interesuje i ile czasu chcesz spędzić w drodze.",
     trails: TRAILS_PL,
     trailNote: 'Szczegóły trasy — w porozumieniu z prowadzącym. Wycieczka może łączyć kilka wątków.',
     facts: [
@@ -550,7 +606,7 @@ const I18N = {
         ['Hosting i ochrona', 'Strona jest hostowana w Cloudflare Pages, a ruch przechodzi przez sieć Cloudflare wraz z zaporą aplikacyjną (WAF), która blokuje ataki i nadużycia. Cloudflare przetwarza przy tym adres IP, typ przeglądarki i podobne dane techniczne — jest to niezbędne do dostarczenia i zabezpieczenia strony.'],
         ['Statystyki', 'Do liczenia odwiedzin używam Cloudflare Web Analytics. Narzędzie nie zapisuje ciasteczek, nie tworzy profili i nie śledzi cię między stronami — pokazuje wyłącznie zbiorcze liczby odsłon i źródła wejść.'],
         ['Ciasteczka i pamięć przeglądarki', 'Strona nie używa ciasteczek reklamowych ani analitycznych. W pamięci przeglądarki zapisywany jest tylko wybrany język (klucz „wasyl-lang”), żeby przy kolejnej wizycie strona otworzyła się w tej samej wersji.'],
-        ['Zasoby zewnętrzne', 'Kroje pisma i biblioteki (mapa, interfejs) są hostowane razem ze stroną, więc nie łączysz się przy tym z żadnym zewnętrznym serwerem. Jedynym zasobem z zewnątrz są kafle mapy z OpenStreetMap — wczytują się dopiero przy przewinięciu do sekcji z mapą i oznaczają przekazanie twojego adresu IP fundacji OpenStreetMap.'],
+        ['Zasoby zewnętrzne', 'Kroje pisma i biblioteka mapy Leaflet są hostowane razem ze stroną, więc nie łączysz się przy tym z żadnym zewnętrznym serwerem. Jedynym zasobem z zewnątrz są kafle mapy z OpenStreetMap — wczytują się dopiero przy przewinięciu do sekcji z mapą i oznaczają przekazanie twojego adresu IP fundacji OpenStreetMap.'],
         ['Twoje prawa', 'Masz prawo do dostępu do swoich danych, ich sprostowania, usunięcia i ograniczenia przetwarzania oraz do sprzeciwu. Wystarczy e-mail. Skargę możesz złożyć do Prezesa Urzędu Ochrony Danych Osobowych.']
       ]
     },
@@ -572,29 +628,32 @@ const I18N = {
     }
   },
   en: {
-    docTitle: 'Wasyl prowadzi — personalised guided trips in the Beskid Niski and Lemko country',
+    docTitle: "Wasyl prowadzi — Beskid Niski and Beyond. Tours with a Historian",
     nav: ['History', 'Wasyl', 'Trails', 'Map', 'Reviews', 'Contact'],
     navAria: 'Navigation',
     portraitTitle: 'Franciszek Wasyl — back to top',
     portraitCaption: 'Franciszek Wasyl — historian, author, guide',
     langTitle: 'Change language',
     cta: 'Book a trip',
-    heroH1: 'Personalised guided trips in the Beskid\u00a0Niski, Lemko country and beyond',
-    tagline: 'knowledge — humour — good fun',
+    heroH1: "Beskid Niski and Beyond",
+    heroH1b: "Tours with a Historian",
+    tagline: "knowledge – humour – good fun",
     heroAlt: 'Mist over the ridges of the Beskid Niski',
     heroLead: 'From a single afternoon to three days. From one to five people. A route built around you — by a historian who lives here.',
     kicker: 'Beskid Niski · Lemko Region · Subcarpathia',
     startLink: 'Start with the history ↓',
     s1h: 'History',
-    s1p1: 'This corner of the Carpathians changed its inhabitants, languages and borders more often than the names on its maps. Lemkos, Jews, Poles, Hungarians, Galician officials and oil entrepreneurs left behind Eastern-rite churches, cemeteries, wayside shrines, drilling wells and the remains of manor houses.',
-    s1p2: 'Most of it stands in the forest today, with no plaque and no caption. That is what this trip is for — so that someone tells you what you are looking at.',
+    s1p1: "This part of the Carpathians is not merely a landscape, but a collection of places layered with meaning, memory and emotion. Different cultures crossed paths here, while borders and states came and went. Time settled into the landscape like layers of rock, leaving tangible traces behind: an Orthodox or Greek Catholic church, a Roman Catholic church, a synagogue, a Jewish cemetery, a First World War cemetery, a roadside shrine, a manor house, an oil well, an old trade route, or the layout of a former Galician town.",
+    s1p2: "Not all of these traces are obvious today. Many have become wrapped in sentimental myths that sometimes obscure more than they explain. On our tours, I will try to show you the historical face of this region — not its sentimentalised version.",
     s2h: 'Who is Wasyl?',
-    s2p1: 'I was born in Rzeszów and chose to live at the foot of the Beskid Niski. By profession I am a historian and a populariser of knowledge about the Subcarpathian region, the author of books and articles on the ethnic history of the Eastern Carpathians.',
-    s2p2: 'For years I have been showing friends and guests around the area where I live and which I study as a historian.',
-    s2quote: 'Plenty of humour, an easy pace and solid knowledge — from a historian and a local in one.',
-    s3h: 'Stories we can live through together',
-    s3p1: 'Individually designed trips through the Beskid Niski and the foothills, with an expert introduction to the history, legends, curiosities and secrets of the region, as well as its flavours and attractions. My expeditions combine trekking, the history and heritage of the region, and a good feast at the end.',
-    s3p2: 'The programme covers important places, people, stories, local delicacies and whatever else you feel like.',
+    s2p1: "I was born in Rzeszów, but chose to make my home in the foothills of the Beskid Niski. I am a historian and a tour guide by profession. For nearly twenty years, I have been researching the history of the Carpathians and the people who have lived here. I hold a PhD in History and am the author of ",
+    s2link: "books and articles",
+    s2p1b: " on the ethnic history of the Eastern Carpathians.",
+    s2p2: "For years, I have been showing friends and visitors around the region where I live and which I study as a historian. I want to show it to you in the same way I like to explore it myself — without embellishment or ready-made stories, but with curiosity, humour and solid historical knowledge.",
+    s2quote: "A historian and a local in one. Plenty of knowledge, a little humour, and no legends pretending to be history.",
+    s3h: "Stories We Can Explore Together",
+    s3p1: "Individually tailored tours of the Beskid Niski and the surrounding area. I combine exploring the landscape with discovering the history, people and places that have shaped this region. We visit wooden churches, cemeteries and Jewish burial grounds, old towns and villages, as well as places whose significance is not always obvious at first glance.",
+    s3p2: "But there is more to life than history. Along the way, there will be time for a great view, local flavours, a taste of the region’s wines and encounters with interesting people — and, if we feel like it, a proper feast as well. I plan each route individually, depending on what interests you and how much time you would like to spend exploring.",
     trails: TRAILS_EN,
     trailNote: 'Route details — agreed with the guide. One trip can combine several themes.',
     facts: [
@@ -636,7 +695,7 @@ const I18N = {
         ['Hosting and protection', 'The site is hosted on Cloudflare Pages and traffic passes through the Cloudflare network together with its web application firewall (WAF), which blocks attacks and abuse. In doing so Cloudflare processes your IP address, browser type and similar technical data, which is necessary to deliver and secure the site.'],
         ['Statistics', 'Visits are counted with Cloudflare Web Analytics. It sets no cookies, builds no profiles and does not track you across sites — it only shows aggregate page views and referrers.'],
         ['Cookies and browser storage', 'The site uses no advertising or analytics cookies. The only thing stored in your browser is the chosen language (the key “wasyl-lang”), so that the site opens in the same version on your next visit.'],
-        ['Third-party resources', 'The typefaces and the libraries (map, interface) are hosted alongside the site, so loading them involves no external server. The only third-party resource is the map tiles from OpenStreetMap — they load only when you scroll to the map section, and loading them passes your IP address to the OpenStreetMap Foundation.'],
+        ['Third-party resources', 'The typefaces and the Leaflet map library are hosted alongside the site, so loading them involves no external server. The only third-party resource is the map tiles from OpenStreetMap — they load only when you scroll to the map section, and loading them passes your IP address to the OpenStreetMap Foundation.'],
         ['Your rights', 'You have the right to access your data, to correct, erase or restrict its processing and to object. An email is enough. You may also lodge a complaint with the Polish data protection authority (UODO).']
       ]
     },
@@ -658,29 +717,32 @@ const I18N = {
     }
   },
   fr: {
-    docTitle: 'Wasyl prowadzi — excursions personnalisées dans les Basses Beskides et le pays lemko',
+    docTitle: "Wasyl prowadzi — Basses Beskides et alentours. Excursions avec un historien",
     nav: ['Histoire', 'Wasyl', 'Sentiers', 'Carte', 'Avis', 'Contact'],
     navAria: 'Navigation',
     portraitTitle: 'Franciszek Wasyl — retour en haut',
     portraitCaption: 'Franciszek Wasyl — historien, auteur, guide',
     langTitle: 'Changer de langue',
     cta: 'Réserver une sortie',
-    heroH1: 'Excursions personnalisées dans les Basses\u00a0Beskides, le pays lemko et ses alentours',
-    tagline: 'savoir — humour — plaisir',
+    heroH1: "Basses Beskides et alentours",
+    heroH1b: "Excursions avec un historien",
+    tagline: "savoir – humour – plaisir",
     heroAlt: 'Brume sur les crêtes des Basses Beskides',
     heroLead: 'D’un seul après-midi à trois jours. D’une à cinq personnes. Un itinéraire composé pour vous — par un historien qui vit ici.',
     kicker: 'Basses Beskides · Pays lemko · Subcarpatie',
     startLink: 'Commencez par l’histoire ↓',
     s1h: 'Histoire',
-    s1p1: 'Ce coin des Carpates a changé d’habitants, de langues et de frontières plus souvent que les noms inscrits sur ses cartes. Lemkos, Juifs, Polonais, Hongrois, fonctionnaires galiciens et entrepreneurs du pétrole y ont laissé des églises orientales, des cimetières, des chapelles, des puits de forage et des restes de manoirs.',
-    s1p2: 'L’essentiel se dresse aujourd’hui en forêt, sans panneau ni légende. C’est à cela que sert cette excursion : que quelqu’un vous dise ce que vous voyez.',
+    s1p1: "Cette partie des Carpates n’est pas seulement un espace, mais un ensemble de lieux chargés de sens, de mémoire et d’émotions. Des cultures différentes s’y sont croisées, les frontières et les États ont changé. Le temps s’est déposé dans le paysage comme des couches de roche, laissant des traces concrètes : une église orthodoxe, une église catholique, une synagogue, un cimetière juif, un cimetière militaire, une chapelle, un manoir, un puits de pétrole, une ancienne route ou le plan d’un ancien bourg galicien.",
+    s1p2: "Toutes ces traces ne sont pas évidentes aujourd’hui. Beaucoup se sont couvertes d’un mythe sentimental qui parfois cache plus qu’il n’explique. Pendant nos excursions, j’essaierai de vous montrer le visage historique de cette région — et non sa contrefaçon sentimentale.",
     s2h: 'Qui est Wasyl ?',
-    s2p1: 'Né à Rzeszów, j’ai choisi de vivre au pied des Basses Beskides. Historien de métier, je fais connaître la région de Subcarpatie et je suis l’auteur de livres et d’articles sur l’histoire ethnique des Carpates orientales.',
-    s2p2: 'Depuis des années, je fais découvrir à mes amis et à mes hôtes la région où je vis et que j’étudie en tant qu’historien.',
-    s2quote: 'Beaucoup d’humour, de décontraction et un vrai savoir, d’un historien qui est aussi du pays.',
-    s3h: 'Des histoires à vivre ensemble',
-    s3p1: 'Des excursions conçues sur mesure dans les Basses Beskides et les avant-monts, avec une introduction experte à l’histoire, aux légendes, aux curiosités et aux secrets de la région, ainsi qu’à ses saveurs et à ses attraits. Mes sorties mêlent randonnée, découverte du passé et du patrimoine, et, pour finir, un bon festin.',
-    s3p2: 'Au programme : des lieux importants, des gens, des récits, des spécialités locales et tout ce dont vous aurez envie.',
+    s2p1: "Né à Rzeszów, j’ai choisi de vivre au pied des Basses Beskides. Je suis historien et guide de métier. Depuis près de vingt ans, j’étudie l’histoire des Carpates et de leurs habitants. Docteur en histoire, je suis l’auteur de ",
+    s2link: "livres et d’articles",
+    s2p1b: " consacrés à l’histoire ethnique des Carpates orientales.",
+    s2p2: "Depuis des années, je fais découvrir à mes amis et à mes hôtes la région où je vis et que j’étudie en tant qu’historien. Je veux vous la montrer comme j’aime moi-même la découvrir — sans embellissements ni récits tout faits, mais avec curiosité, humour et un solide savoir.",
+    s2quote: "Historien et gars du coin à la fois. Beaucoup de savoir, un peu d’humour et aucune légende qui se fait passer pour de l’histoire.",
+    s3h: "Des histoires à découvrir ensemble",
+    s3p1: "Des excursions préparées sur mesure dans les Basses Beskides et leurs alentours. J’y associe la marche à la découverte de l’histoire, des gens et des lieux qui ont façonné cette région. Nous entrons dans les églises orthodoxes et catholiques, nous visitons les cimetières chrétiens et juifs, les anciens bourgs, les villages et des lieux dont l’importance ne saute pas toujours aux yeux.",
+    s3p2: "Mais l’homme ne vit pas que d’histoire. En chemin, il y aura du temps pour une belle vue, les saveurs locales, les vins de la région et des rencontres avec des gens intéressants — et, si l’envie nous en prend, pour un vrai festin. Je compose chaque itinéraire individuellement, selon ce qui vous intéresse et le temps que vous souhaitez passer en route.",
     trails: TRAILS_FR,
     trailNote: 'Les détails de l’itinéraire se règlent avec le guide. Une sortie peut associer plusieurs thèmes.',
     facts: [
@@ -722,7 +784,7 @@ const I18N = {
         ['Hébergement et protection', 'Le site est hébergé sur Cloudflare Pages et le trafic passe par le réseau Cloudflare avec son pare-feu applicatif (WAF), qui bloque les attaques et les abus. Cloudflare traite à cette occasion votre adresse IP, le type de navigateur et des données techniques similaires, nécessaires à la diffusion et à la sécurité du site.'],
         ['Statistiques', 'Les visites sont comptées avec Cloudflare Web Analytics. L’outil ne dépose pas de cookies, ne crée pas de profils et ne vous suit pas d’un site à l’autre — il n’affiche que des totaux de pages vues et de sources de trafic.'],
         ['Cookies et stockage local', 'Le site n’utilise aucun cookie publicitaire ou analytique. Seule la langue choisie est conservée dans votre navigateur (clé « wasyl-lang »), afin que le site s’ouvre dans la même version à votre prochaine visite.'],
-        ['Ressources externes', 'Les polices et les bibliothèques (carte, interface) sont hébergées avec le site : leur chargement ne fait appel à aucun serveur externe. La seule ressource externe reste les tuiles cartographiques d’OpenStreetMap — elles ne se chargent qu’au moment où vous atteignez la section carte, et transmettent alors votre adresse IP à la Fondation OpenStreetMap.'],
+        ['Ressources externes', 'Les polices et la bibliothèque cartographique Leaflet sont hébergées avec le site : leur chargement ne fait appel à aucun serveur externe. La seule ressource externe reste les tuiles cartographiques d’OpenStreetMap — elles ne se chargent qu’au moment où vous atteignez la section carte, et transmettent alors votre adresse IP à la Fondation OpenStreetMap.'],
         ['Vos droits', 'Vous avez le droit d’accéder à vos données, de les rectifier, de les effacer, d’en limiter le traitement et de vous y opposer. Un e-mail suffit. Vous pouvez également saisir l’autorité polonaise de protection des données (UODO).']
       ]
     },
@@ -746,7 +808,7 @@ const I18N = {
 };
 
 class Component extends DCLogic {
-  state = { active: 'historia', open: null, shortViewport: false, langOpen: false, moreOpen: false, narrow: false, barAtEnd: false, lang: 'pl', view: 'home' };
+  state = { active: 'historia', open: null, shortViewport: false, langOpen: false, moreOpen: false, narrow: false, barAtEnd: false, lang: 'pl', view: 'home', heroV: 'classic', fontV: 'serif' };
 
   readRoute() {
     const h = (window.location.hash || '').replace('#', '');
@@ -756,6 +818,10 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    try {
+      const p = JSON.parse(window.localStorage.getItem('wasyl-preview') || '{}');
+      if (p.heroV || p.fontV) this.setState({ heroV: p.heroV || 'classic', fontV: p.fontV || 'serif' });
+    } catch (e) {}
     let start = this.state.lang;
     try {
       const saved = window.localStorage.getItem('wasyl-lang');
@@ -866,6 +932,12 @@ class Component extends DCLogic {
     bar.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
   }
 
+  setPreview(key, val) {
+    this.setState({ [key]: val }, () => {
+      try { window.localStorage.setItem('wasyl-preview', JSON.stringify({ heroV: this.state.heroV, fontV: this.state.fontV })); } catch (e) {}
+    });
+  }
+
   renderVals() {
     const accent = this.props.accent ?? '#0E5236';
     const t = I18N[this.state.lang] || I18N.pl;
@@ -956,6 +1028,23 @@ class Component extends DCLogic {
       moreOpen: this.state.moreOpen,
       toggleMore: () => this.setState(s => ({ moreOpen: !s.moreOpen, langOpen: false })),
       closeMore: () => this.setState({ moreOpen: false }),
+      heroBand: this.state.heroV === 'band',
+      heroClassic: this.state.heroV !== 'band',
+      fontV: this.state.fontV,
+      bandH: this.state.narrow ? 'max(440px, 70vh)' : 'max(520px, min(78vh, 760px))',
+      bandPad: this.state.narrow ? '0 22px 40px' : '0 56px 72px',
+      bandBelowPad: this.state.narrow ? '32px 22px 36px' : '44px 56px 40px',
+      bandLogoW: this.state.narrow ? '220px' : '300px',
+      previewRows: [
+        ['Top', 'heroV', [['classic', 'Klasyczny'], ['band', 'Pas']]],
+        ['Krój', 'fontV', [['serif', 'Szeryfowy'], ['sans', 'Bezszeryfowy']]]
+      ].map(([label, key, opts]) => ({
+        label,
+        opts: opts.map(([v, l]) => {
+          const on = this.state[key] === v;
+          return { label: l, pick: () => this.setPreview(key, v), bg: on ? '#0E5236' : 'transparent', color: on ? '#FAF8F4' : '#2A312C' };
+        })
+      })),
       moreActive: legalActive,
       isHome: this.state.view === 'home',
       showPrivacy: this.state.view === 'privacy',

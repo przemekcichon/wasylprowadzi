@@ -12,6 +12,7 @@ Stan wdrożenia, decyzje architektoniczne i harmonogram — aktualizowane na bie
 - **Cloudflare Pages podpięte** — repo połączone przez dashboard, skonfigurowany custom domain.
 - **GitHub ↔ Claude Code działa** — agent tworzy gałęzie i PR-y z promptów w bieżącej sesji (potwierdzone w praktyce, nie tylko deklaratywnie).
 - **Naprawiony scroll dolnego menu na mobile** (PR #3) — usunięty `scroll-snap-type`/`scroll-snap-align`, który cofał przewijanie przed dotarciem do ikonek telefonu/poczty; zastąpiony `overscroll-behavior-x: contain`. Przy okazji naprawiony błąd w `componentDidUpdate` (sięgał po nieistniejący argument), który blokował zmianę tytułu strony i `html lang` przy przełączaniu języka. Poprawkę przygotował Claude Design.
+- PR #2 i #4 — wyłącznie dokumentacja stanu w `plan.md` (stan na 2026-08-22, odnotowanie naprawy scrolla).
 - **Przycisk zamknięcia menu „Więcej” na mobile** (PR #5) i **poprawione podświetlenie ostatniej sekcji w nawigacji** (PR #6).
 - **Wszystkie zasoby hostowane lokalnie** (PR #7, #8) — fonty (EB Garamond, Barlow; woff2 z gstatic), Leaflet, React i ReactDOM leżą w `dist/`. Jedyny zasób z zewnątrz to kafle mapy OSM. Decyzja: prywatność odwiedzających (brak zapytań do Google/unpkg) i brak zależności od cudzych CDN.
 
@@ -20,7 +21,7 @@ Stan wdrożenia, decyzje architektoniczne i harmonogram — aktualizowane na bie
 - Nowy tytuł, motto, meta description i teksty og:.
 - Poprawiony logotyp, zmniejszony do 800 px szerokości (strona wyświetla go najwyżej na 400 px).
 - **Tymczasowe przełączniki** w menu „Więcej”: układ góry (Klasyczny / Pas) i krój (Szeryfowy / Bezszeryfowy), zapis w localStorage (`wasyl-preview`). Decyzja: przełączniki służą tylko klientowi do wyboru wariantu, dlatego świadomie nie są tłumaczone, nie są opisane w polityce prywatności i nie usuwamy mignięcia domyślnego wariantu przy wczytaniu.
-- Inter hostowany lokalnie (4 pliki woff2, latin + latin-ext) na potrzeby wariantu bezszeryfowego.
+- Inter hostowany lokalnie (4 pliki woff2, latin + latin-ext) na potrzeby wariantu bezszeryfowego. Pliki najpewniej z Google Fonts (budowa zgodna z plikami z gstatic), ale źródło nie jest potwierdzone — mogą pochodzić z Fontsource.
 - Usunięte strony pomocnicze `font-test.html` i `font-fetch.html`; README opisuje, jak odtworzyć fonty bez nich.
 - Naprawiona notka pod opisem szlaku, która nigdy się nie wyświetlała: zmienna pętli `t` zasłaniała słownik tłumaczeń `t`, więc zmieniona na `tr`.
 - `og:image` jako bezwzględny adres `https://wasylprowadzi.pl/...` i w formacie JPG (1024×536, kadr 1,91:1), bo część serwisów społecznościowych nie przyjmuje adresu względnego ani WebP.
@@ -34,6 +35,7 @@ Stan wdrożenia, decyzje architektoniczne i harmonogram — aktualizowane na bie
 - **Redakcja tekstów** — klient poprawia język sam: wersja FR, nazwy szlaków w EN/FR (obecnie po polsku), twarde spacje po jednoliterowych spójnikach, dywizy zamiast półpauz.
 
 ### Do zrobienia (kandydaci — nie w planie, do przegłosowania na sesji planistycznej)
+- **Podział planu na fazy** (przygotowanie środowiska, implementacja, testy, deploy, utrzymanie) z checklistą i harmonogramem, zgodnie z `CLAUDE.md` — obecny `plan.md` go nie ma.
 - **Atrybuty `width`/`height` na `<img>`** (m.in. logotyp) — zapobiegają przesuwaniu się układu podczas ładowania.
 - **Tagi `twitter:card` i `og:url`** — ładniejszy podgląd linku w X/Twitterze i jednoznaczny adres kanoniczny.
 - **Claude Design → GitHub**: narzędzie `DesignSync` widzi tylko projekty typu "design system" (biblioteki komponentów) z konta, na którym akurat jest zalogowana sesja — przy sprawdzaniu byliśmy zalogowani na złe konto, więc nie potwierdziliśmy jeszcze, czy/jak połączyć konkretny projekt strony (ten, który wygenerował `dist/`) z GitHubem. Do ponownego sprawdzenia na właściwym koncie.

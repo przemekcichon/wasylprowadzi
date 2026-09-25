@@ -11,7 +11,7 @@ Statyczna strona jednostronicowa. Bez build stepu — Cloudflare Pages serwuje p
 - `vendor/react/` — React i ReactDOM 18.3.1 UMD, hostowane lokalnie; `index.html` mapuje na nie adresy CDN przez `window.__resources` przed wczytaniem `support.js`
 - `fonts/` — 18 plików woff2 pobranych wprost z Google Fonts, licencja OFL; każdy krój w podzbiorach latin i latin-ext:
   - EB Garamond 400/500/600 + 400 italic, Barlow 400/500/600 (14 plików)
-  - Inter, wersja zmienna, normal + italic (4 pliki) — dla wariantu bezszeryfowego z przełącznika kroju
+  - Inter, wersja zmienna, normal + italic (4 pliki) — dla wariantu bezszeryfowego z przełącznika kroju; budowa zgodna z plikami Google Fonts, źródło niepotwierdzone
 
 Jedyny zasób z zewnątrz to kafle mapy z `tile.openstreetmap.org`. Fonty, Leaflet, React i ReactDOM idą z naszego serwera. Babel nie jest pobierany — runtime sięga po niego tylko gdy w projekcie jest plik `.jsx`, a takiego nie ma.
 

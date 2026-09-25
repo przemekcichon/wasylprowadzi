@@ -20,7 +20,10 @@
 <meta name="description" content="Beskid Niski i okolice. Wycieczki z historykiem — wiedza, humor, frajda. Od jednego popołudnia do trzech dni, od 1 do 5 osób. Prowadzi Franciszek Wasyl, historyk i przewodnik.">
 <meta property="og:title" content="Wasyl prowadzi — Beskid Niski i okolice. Wycieczki z historykiem">
 <meta property="og:description" content="Wiedza, humor, frajda. Trasa układana indywidualnie przez historyka, który tu mieszka.">
-<meta property="og:image" content="/img/mgla-nad-grzbietami.webp">
+<meta property="og:image" content="https://wasylprowadzi.pl/img/og-mgla-nad-grzbietami.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="536">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pl_PL">
 <link rel="preload" href="fonts/eb-garamond-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -256,21 +259,21 @@
         </div>
 
         <div style="border-top: 1px solid rgba(27,33,29,0.14);">
-          <sc-for list="{{ trails }}" as="t" hint-placeholder-count="15">
+          <sc-for list="{{ trails }}" as="tr" hint-placeholder-count="15">
             <div style="border-bottom: 1px solid rgba(27,33,29,0.14);">
-              <button onClick="{{ t.toggle }}" style="display: grid; grid-template-columns: 42px 1fr auto; align-items: baseline; gap: 18px; width: 100%; padding: 20px 6px; background: transparent; border: 0; cursor: pointer; text-align: left; font-family: 'EB Garamond', Georgia, serif;" style-hover="background: rgba(14,82,54,0.035)">
-                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.12em; color: #9A9E95;">{{ t.num }}</span>
+              <button onClick="{{ tr.toggle }}" style="display: grid; grid-template-columns: 42px 1fr auto; align-items: baseline; gap: 18px; width: 100%; padding: 20px 6px; background: transparent; border: 0; cursor: pointer; text-align: left; font-family: 'EB Garamond', Georgia, serif;" style-hover="background: rgba(14,82,54,0.035)">
+                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.12em; color: #9A9E95;">{{ tr.num }}</span>
                 <span style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;">
-                  <span style="font-family: Barlow, system-ui, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: {{ t.titleColor }};">{{ t.name }}</span>
-                  <span style="font-size: 19px; color: #5C6359;">{{ t.desc }}</span>
+                  <span style="font-family: Barlow, system-ui, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: {{ tr.titleColor }};">{{ tr.name }}</span>
+                  <span style="font-size: 19px; color: #5C6359;">{{ tr.desc }}</span>
                 </span>
-                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 18px; line-height: 1; color: #0E5236;">{{ t.sign }}</span>
+                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 18px; line-height: 1; color: #0E5236;">{{ tr.sign }}</span>
               </button>
-              <sc-if value="{{ t.open }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ tr.open }}" hint-placeholder-val="{{ false }}">
                 <div style="display: grid; grid-template-columns: 42px 1fr; gap: 18px; padding: 0 6px 28px;">
                   <span></span>
                   <div style="max-width: 60ch;">
-                    <p style="margin: 0 0 18px; font-size: 20px; line-height: 1.6; color: #2A312C;">{{ t.long }}</p>
+                    <p style="margin: 0 0 18px; font-size: 20px; line-height: 1.6; color: #2A312C;">{{ tr.long }}</p>
                     <p style="margin: 0; font-family: Barlow, system-ui, sans-serif; font-size: 13px; line-height: 1.6; color: #7B8076;">{{ t.trailNote }}</p>
                   </div>
                 </div>

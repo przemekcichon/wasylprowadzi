@@ -15,7 +15,7 @@ Statyczna strona jednostronicowa. Bez build stepu — Cloudflare Pages serwuje p
 
 Jedyny zasób z zewnątrz to kafle mapy z `tile.openstreetmap.org`. Fonty, Leaflet, React i ReactDOM idą z naszego serwera. Babel nie jest pobierany — runtime sięga po niego tylko gdy w projekcie jest plik `.jsx`, a takiego nie ma.
 
-Pliki fontów pochodzą z gstatic (nie z Fontsource) — builda Fontsource rysuje tekst o 7,3% szerzej. Jeśli kiedyś trzeba je odtworzyć: otwórz w nowoczesnej przeglądarce arkusz CSS z `fonts.googleapis.com/css2` (np. `?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Barlow:wght@400;500;600&display=swap`, dla Intera `?family=Inter:ital,wght@0,400..600;1,400..600&display=swap`), pobierz pliki woff2 z bloków oznaczonych `/* latin */` i `/* latin-ext */` i nazwij je według schematu z `index.html`.
+Pliki fontów pochodzą z gstatic (nie z Fontsource) — builda Fontsource rysuje tekst o 7,3% szerzej. Jeśli kiedyś trzeba je odtworzyć: otwórz w nowoczesnej przeglądarce arkusz CSS z `fonts.googleapis.com/css2` (np. `?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Barlow:wght@400;500;600&display=swap`, dla Intera `?family=Inter:ital,wght@0,100..900;1,100..900&display=swap`), pobierz pliki woff2 z bloków oznaczonych `/* latin */` i `/* latin-ext */` i nazwij je według schematu z `index.html`.
 
 ## Lokalnie
 Otwórz przez serwer statyczny, nie przez `file://`:

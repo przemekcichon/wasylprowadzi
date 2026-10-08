@@ -69,7 +69,7 @@
 
   <nav style="position: fixed; inset: 0 auto 0 0; width: 88px; z-index: 50; display: {{ railDisplay }}; flex-direction: column; align-items: center; gap: {{ navGap }}; padding: 18px 0 16px; background: #FAF8F4; border-right: 1px solid rgba(27,33,29,0.12);" style-hover="background: #FAF8F4">
     <a href="#top" title="{{ t.portraitTitle }}" style="display: block; width: {{ avatarSize }}; height: {{ avatarSize }}; border-radius: 999px; overflow: hidden; border: 1px solid rgba(27,33,29,0.18); box-shadow: 0 2px 10px -6px rgba(27,33,29,0.5); flex: 0 0 auto;">
-      <img src="img/franciszek-wasyl.webp" alt="Franciszek Wasyl" style="width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.15) contrast(1.05);">
+      <img src="img/franciszek-wasyl-avatar.webp" alt="Franciszek Wasyl" style="width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.15) contrast(1.05);">
     </a>
 
     <div style="width: 18px; height: 1px; background: rgba(27,33,29,0.18);"></div>
@@ -146,7 +146,7 @@
     <header id="top" style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 14px {{ sidePad }}; background: rgba(250,248,244,0.88); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(27,33,29,0.1);">
       <a href="#top" style="display: flex; align-items: center; gap: 12px; line-height: 0; text-decoration: none; color: #1B211D;">
         <sc-if value="{{ isNarrow }}" hint-placeholder-val="{{ false }}">
-          <img src="img/franciszek-wasyl.webp" alt="Franciszek Wasyl" style="width: 44px; height: 44px; flex: 0 0 auto; border-radius: 999px; object-fit: cover; border: 1px solid rgba(27,33,29,0.18); filter: saturate(0.15) contrast(1.05);">
+          <img src="img/franciszek-wasyl-avatar.webp" alt="Franciszek Wasyl" style="width: 44px; height: 44px; flex: 0 0 auto; border-radius: 999px; object-fit: cover; border: 1px solid rgba(27,33,29,0.18); filter: saturate(0.15) contrast(1.05);">
         </sc-if>
         <span style="display: {{ logoDisplay }}; font-family: 'EB Garamond', Georgia, serif; font-size: 25px; line-height: 1; letter-spacing: 0.005em; color: #1B211D;">wasylprowadzi<span style="color: #E8891B;">.pl</span></span>
       </a>
@@ -259,22 +259,32 @@
         </div>
 
         <div style="border-top: 1px solid rgba(27,33,29,0.14);">
-          <sc-for list="{{ trails }}" as="tr" hint-placeholder-count="15">
-            <div style="border-bottom: 1px solid rgba(27,33,29,0.14);">
-              <button onClick="{{ tr.toggle }}" style="display: grid; grid-template-columns: 42px 1fr auto; align-items: baseline; gap: 18px; width: 100%; padding: 20px 6px; background: transparent; border: 0; cursor: pointer; text-align: left; font-family: 'EB Garamond', Georgia, serif;" style-hover="background: rgba(14,82,54,0.035)">
-                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.12em; color: #9A9E95;">{{ tr.num }}</span>
+          <sc-for list="{{ trails }}" as="t" hint-placeholder-count="15">
+            <div data-trail="{{ t.num }}" style="border-bottom: 1px solid rgba(27,33,29,0.14);">
+              <button onClick="{{ t.toggle }}" style="display: grid; grid-template-columns: 42px 1fr auto; align-items: baseline; gap: 18px; width: 100%; padding: 20px 6px; background: transparent; border: 0; cursor: pointer; text-align: left; font-family: 'EB Garamond', Georgia, serif;" style-hover="background: rgba(14,82,54,0.035)">
+                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; letter-spacing: 0.12em; color: #9A9E95;">{{ t.num }}</span>
                 <span style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;">
-                  <span style="font-family: Barlow, system-ui, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: {{ tr.titleColor }};">{{ tr.name }}</span>
-                  <span style="font-size: 19px; color: #5C6359;">{{ tr.desc }}</span>
+                  <span style="font-family: Barlow, system-ui, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: {{ t.titleColor }};">{{ t.name }}</span>
+                  <span style="font-size: 19px; color: #5C6359;">{{ t.desc }}</span>
                 </span>
-                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 18px; line-height: 1; color: #0E5236;">{{ tr.sign }}</span>
+                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 18px; line-height: 1; color: #0E5236;">{{ t.sign }}</span>
               </button>
-              <sc-if value="{{ tr.open }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ t.open }}" hint-placeholder-val="{{ false }}">
                 <div style="display: grid; grid-template-columns: 42px 1fr; gap: 18px; padding: 0 6px 28px;">
                   <span></span>
-                  <div style="max-width: 60ch;">
-                    <p style="margin: 0 0 18px; font-size: 20px; line-height: 1.6; color: #2A312C;">{{ tr.long }}</p>
-                    <p style="margin: 0; font-family: Barlow, system-ui, sans-serif; font-size: 13px; line-height: 1.6; color: #7B8076;">{{ t.trailNote }}</p>
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 28px 48px; align-items: start;">
+                    <div style="max-width: 60ch;">
+                      <p style="margin: 0 0 18px; font-size: 20px; line-height: 1.6; color: #2A312C;">{{ t.long }}</p>
+                      <p style="margin: 0; font-family: Barlow, system-ui, sans-serif; font-size: 13px; line-height: 1.6; color: #7B8076;">{{ t.trailNote }}</p>
+                    </div>
+                    <sc-if value="{{ t.hasPhotos }}" hint-placeholder-val="{{ false }}">
+                      <figure style="margin: 0; max-width: 460px;">
+                        <button onClick="{{ t.openGallery }}" aria-label="{{ t.galleryCta }}" style="display: block; width: 100%; padding: 0; border: 0; background: #EFEDE6; cursor: zoom-in;">
+                          <img src="{{ t.cover }}" alt="{{ t.coverAlt }}" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid rgba(27,33,29,0.1);">
+                        </button>
+                        <button onClick="{{ t.openGallery }}" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 12px; padding: 8px 0; background: transparent; border: 0; cursor: pointer; font-family: Barlow, system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; color: #0E5236;" style-hover="color: #E8891B"><span>{{ t.galleryCta }}</span><span style="color: #E8891B;">→</span></button>
+                      </figure>
+                    </sc-if>
                   </div>
                 </div>
               </sc-if>
@@ -360,6 +370,28 @@
       </div>
     </section>
 
+    </sc-if>
+
+    <sc-if value="{{ galleryOpen }}" hint-placeholder-val="{{ false }}">
+    <section id="galeria" style="padding: 56px {{ sidePad }} 84px;">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <a href="#szlaki" style="display: inline-flex; align-items: center; gap: 10px; margin-bottom: 44px; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">← {{ t.backLabel }}</a>
+        <p style="margin: 0 0 14px; font-family: Barlow, system-ui, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #E8891B;">{{ gal.num }}</p>
+        <h2 style="margin: 0 0 10px; font-family: Barlow, system-ui, sans-serif; font-size: clamp(26px, 3.4vw, 40px); font-weight: 600; letter-spacing: 0.08em; line-height: 1.1; text-transform: uppercase; color: #0E5236;">{{ gal.name }}</h2>
+        <p style="margin: 0; font-size: 22px; font-style: italic; line-height: 1.4; color: #3C443D;">{{ gal.desc }}</p>
+        <div style="columns: 2 340px; column-gap: 20px; margin-top: 44px;">
+          <sc-for list="{{ gal.photos }}" as="p" hint-placeholder-count="4">
+            <figure style="margin: 0 0 20px; break-inside: avoid;">
+              <img src="{{ p.src }}" alt="{{ p.alt }}" loading="lazy" style="display: block; width: 100%; height: auto; background: #EFEDE6; border: 1px solid rgba(27,33,29,0.1);">
+            </figure>
+          </sc-for>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(27,33,29,0.14);">
+          <a href="#szlaki" style="display: inline-flex; align-items: center; gap: 10px; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">← {{ t.backLabel }}</a>
+          <a href="#kontakt" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; background: #0E5236; border-radius: 999px; font-family: Barlow, system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #FAF8F4; text-decoration: none;" style-hover="background: #E8891B">{{ t.cta }}</a>
+        </div>
+      </div>
+    </section>
     </sc-if>
 
     <sc-if value="{{ showPrivacy }}" hint-placeholder-val="{{ false }}">
@@ -470,6 +502,7 @@
       </sc-if>
     </nav>
   </sc-if>
+
 </div>
 
 </x-dc>
@@ -528,6 +561,9 @@ const TRAILS_FR = [
   ["PSIM WĘCHEM", "excursions avec un chien", "Le chien vient aussi. Nous planifions l’itinéraire en pensant à lui : un rythme adapté, de l’eau, de l’ombre et un peu de joie canine. Et si nous allons là où les chiens ne sont pas admis (par exemple dans le Parc national de Magura), votre compagnon vous attendra entre de bonnes mains — dans un hôtel pour chiens avec surveillance 24 h sur 24."]
 ];
 
+const PHOTO_BASE = 'img/szlaki/';
+const TRAIL_PHOTOS = { 0: ['red-cross', 1], 1: ['czarne-zloto', 6], 2: ['polska-burgundia', 8], 4: ['drewniany-swiat', 5], 5: ['beskidzkie-kapliczki', 1], 7: ['rusinskie-bezdroza', 6], 10: ['galicja', 2], 12: ['bukowa-kraina', 4], 14: ['psim-wechem', 2] };
+
 const IDS = ['historia', 'wasyl', 'szlaki', 'mapa', 'opinie', 'kontakt'];
 const LEGAL_IDS = ['prywatnosc', 'regulamin'];
 const LANGS = [['pl', 'Polski', 'PL'], ['en', 'English', 'EN'], ['fr', 'Français', 'FR']];
@@ -570,6 +606,7 @@ const I18N = {
     s3p2: "Nie samą historią jednak człowiek żyje. Po drodze znajdzie się czas na dobry widok, lokalne smaki, winne klimaty i spotkania z ciekawymi ludźmi, a jeśli mamy ochotę — także na porządną biesiadę. Trasę układam indywidualnie, zależnie od tego, co Cię interesuje i ile czasu chcesz spędzić w drodze.",
     trails: TRAILS_PL,
     trailNote: 'Szczegóły trasy — w porozumieniu z prowadzącym. Wycieczka może łączyć kilka wątków.',
+    galleryAll: 'Wszystkie zdjęcia', galleryOne: 'Powiększ zdjęcie', photoWord: 'zdjęcie', closeLabel: 'Zamknij',
     facts: [
       ['Czas trwania', 'Od jednego popołudnia do 3 dni'],
       ['Grupa', 'Od 1 do maksymalnie 5 osób'],
@@ -659,6 +696,7 @@ const I18N = {
     s3p2: "But there is more to life than history. Along the way, there will be time for a great view, local flavours, a taste of the region’s wines and encounters with interesting people — and, if we feel like it, a proper feast as well. I plan each route individually, depending on what interests you and how much time you would like to spend exploring.",
     trails: TRAILS_EN,
     trailNote: 'Route details — agreed with the guide. One trip can combine several themes.',
+    galleryAll: 'All photos', galleryOne: 'View larger', photoWord: 'photo', closeLabel: 'Close',
     facts: [
       ['Duration', 'From a single afternoon to 3 days'],
       ['Group', 'From 1 to a maximum of 5 people'],
@@ -748,6 +786,7 @@ const I18N = {
     s3p2: "Mais l’homme ne vit pas que d’histoire. En chemin, il y aura du temps pour une belle vue, les saveurs locales, les vins de la région et des rencontres avec des gens intéressants — et, si l’envie nous en prend, pour un vrai festin. Je compose chaque itinéraire individuellement, selon ce qui vous intéresse et le temps que vous souhaitez passer en route.",
     trails: TRAILS_FR,
     trailNote: 'Les détails de l’itinéraire se règlent avec le guide. Une sortie peut associer plusieurs thèmes.',
+    galleryAll: 'Toutes les photos', galleryOne: 'Agrandir la photo', photoWord: 'photo', closeLabel: 'Fermer',
     facts: [
       ['Durée', 'D’un après-midi à 3 jours'],
       ['Groupe', 'De 1 à 5 personnes maximum'],
@@ -811,12 +850,34 @@ const I18N = {
 };
 
 class Component extends DCLogic {
-  state = { active: 'historia', open: null, shortViewport: false, langOpen: false, moreOpen: false, narrow: false, barAtEnd: false, lang: 'pl', view: 'home', heroV: 'classic', fontV: 'serif' };
+  state = { active: 'historia', open: null, shortViewport: false, langOpen: false, moreOpen: false, narrow: false, barAtEnd: false, lang: 'pl', view: 'home', heroV: 'classic', fontV: 'serif', gal: null };
+
+  // sekcje strony głównej montują się ponownie po powrocie z podstrony — czekamy, aż będą w układzie
+  scrollWhenReady(getEl, offset) {
+    let tries = 0;
+    const step = () => {
+      const el = getEl();
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        const maxTop = document.documentElement.scrollHeight - window.innerHeight;
+        if (top <= maxTop + 2 || tries > 40) { window.scrollTo({ top }); if (tries < 6) { tries = 6; setTimeout(step, 250); } return; }
+      }
+      if (tries++ < 60) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  galIndex(h) {
+    const slug = h.replace('galeria-', '');
+    const k = Object.keys(TRAIL_PHOTOS).find(i => TRAIL_PHOTOS[i][0] === slug);
+    return k === undefined ? null : Number(k);
+  }
 
   readRoute() {
     const h = (window.location.hash || '').replace('#', '');
     if (h === 'prywatnosc') return 'privacy';
     if (h === 'regulamin') return 'terms';
+    if (h.indexOf('galeria-') === 0 && this.galIndex(h) !== null) return 'gallery';
     return 'home';
   }
 
@@ -832,22 +893,28 @@ class Component extends DCLogic {
     } catch (e) {}
     this.syncDocLang(start);
     const view0 = this.readRoute();
-    if (view0 !== 'home') this.setState({ view: view0 });
+    if (view0 === 'gallery') { const g0 = this.galIndex(window.location.hash.replace('#', '')); this.setState({ view: view0, gal: g0, open: g0, active: 'szlaki' }); }
+    else if (view0 !== 'home') this.setState({ view: view0 });
     this.onHash = () => {
       const view = this.readRoute();
       const h = (window.location.hash || '').replace('#', '');
-      this.setState({ view, moreOpen: false, langOpen: false });
+      if (view === 'gallery') { const g = this.galIndex(h); this.setState({ view, gal: g, open: g, active: 'szlaki', moreOpen: false, langOpen: false }); }
+      else this.setState({ view, gal: null, moreOpen: false, langOpen: false });
       if (view !== 'home') { setTimeout(() => window.scrollTo({ top: 0 }), 40); return; }
+      if (h === 'szlaki' && this.state.open !== null) {
+        const num = String(this.state.open + 1).padStart(2, '0');
+        this.scrollWhenReady(() => document.querySelector('[data-trail="' + num + '"]'), 96);
+        return;
+      }
       if (h && IDS.indexOf(h) !== -1) {
-        setTimeout(() => {
-          const el = document.getElementById(h);
-          if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76 });
-        }, 40);
+        this.scrollWhenReady(() => document.getElementById(h), 76);
       } else {
         setTimeout(() => window.scrollTo({ top: 0 }), 40);
       }
     };
     window.addEventListener('hashchange', this.onHash);
+    this.onKey = (e) => { if (e.key === 'Escape' && this.state.view === 'gallery') window.location.hash = 'szlaki'; };
+    window.addEventListener('keydown', this.onKey);
     this.titleTimer = setTimeout(() => this.syncDocLang(this.state.lang), 400);
     const ids = IDS;
     const pick = () => {
@@ -894,6 +961,7 @@ class Component extends DCLogic {
     window.removeEventListener('scroll', this.onScroll);
     window.removeEventListener('resize', this.onResize);
     window.removeEventListener('hashchange', this.onHash);
+    window.removeEventListener('keydown', this.onKey);
     window.removeEventListener('load', this.onScroll);
     if (this.docObs) this.docObs.disconnect();
     if (this.titleTimer) clearTimeout(this.titleTimer);
@@ -944,7 +1012,7 @@ class Component extends DCLogic {
   renderVals() {
     const accent = this.props.accent ?? '#0E5236';
     const t = I18N[this.state.lang] || I18N.pl;
-    const legalActive = this.state.view !== 'home';
+    const legalActive = this.state.view === 'privacy' || this.state.view === 'terms';
     if (this._docLang !== this.state.lang) this.syncDocLang(this.state.lang);
     const nav = IDS.map((id, i) => {
       const active = this.state.active === id;
@@ -983,11 +1051,27 @@ class Component extends DCLogic {
         num: String(i + 1).padStart(2, '0'),
         sign: open ? '−' : '+',
         titleColor: open ? accent : '#1B211D',
+        trailNote: t.trailNote,
+        hasPhotos: !!TRAIL_PHOTOS[i],
+        cover: TRAIL_PHOTOS[i] ? PHOTO_BASE + TRAIL_PHOTOS[i][0] + '/1-m.webp' : '',
+        coverAlt: name + ' — ' + desc,
+        galleryCta: TRAIL_PHOTOS[i] && TRAIL_PHOTOS[i][1] > 1 ? t.galleryAll + ' (' + TRAIL_PHOTOS[i][1] + ')' : t.galleryOne,
+        openGallery: () => { if (TRAIL_PHOTOS[i]) window.location.hash = 'galeria-' + TRAIL_PHOTOS[i][0]; },
         toggle: () => this.setState(s => ({ open: s.open === i ? null : i }))
       };
     });
 
+    const gi = this.state.gal;
+    const gRow = gi !== null ? t.trails[gi] : null;
+    const gPh = gi !== null ? TRAIL_PHOTOS[gi] : null;
+    const gal = gRow && gPh ? {
+      num: String(gi + 1).padStart(2, '0'),
+      name: gRow[0], desc: gRow[1],
+      photos: Array.from({ length: gPh[1] }, (_, k) => ({ src: PHOTO_BASE + gPh[0] + '/' + (k + 1) + '.webp', alt: gRow[0] + ' — ' + t.photoWord + ' ' + (k + 1) }))
+    } : { num: '', name: '', desc: '', photos: [] };
     return {
+      gal,
+      galleryOpen: this.state.view === 'gallery' && !!(gRow && gPh),
       nav,
       trails,
       t,

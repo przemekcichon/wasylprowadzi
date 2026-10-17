@@ -20,10 +20,7 @@
 <meta name="description" content="Beskid Niski i okolice. Wycieczki z historykiem — wiedza, humor, frajda. Od jednego popołudnia do trzech dni, od 1 do 5 osób. Prowadzi Franciszek Wasyl, historyk i przewodnik.">
 <meta property="og:title" content="Wasyl prowadzi — Beskid Niski i okolice. Wycieczki z historykiem">
 <meta property="og:description" content="Wiedza, humor, frajda. Trasa układana indywidualnie przez historyka, który tu mieszka.">
-<meta property="og:image" content="https://wasylprowadzi.pl/img/og-mgla-nad-grzbietami.jpg">
-<meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="1024">
-<meta property="og:image:height" content="536">
+<meta property="og:image" content="/img/mgla-nad-grzbietami.webp">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pl_PL">
 <link rel="preload" href="fonts/eb-garamond-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -65,7 +62,7 @@
 </style>
 </helmet>
 
-<div data-font="{{ fontV }}" style="font-family: 'EB Garamond', Georgia, serif; background: #FAF8F4; min-height: 100vh;">
+<div data-font="sans" style="font-family: 'EB Garamond', Georgia, serif; background: #FAF8F4; min-height: 100vh;">
 
   <nav style="position: fixed; inset: 0 auto 0 0; width: 88px; z-index: 50; display: {{ railDisplay }}; flex-direction: column; align-items: center; gap: {{ navGap }}; padding: 18px 0 16px; background: #FAF8F4; border-right: 1px solid rgba(27,33,29,0.12);" style-hover="background: #FAF8F4">
     <a href="#top" title="{{ t.portraitTitle }}" style="display: block; width: {{ avatarSize }}; height: {{ avatarSize }}; border-radius: 999px; overflow: hidden; border: 1px solid rgba(27,33,29,0.18); box-shadow: 0 2px 10px -6px rgba(27,33,29,0.5); flex: 0 0 auto;">
@@ -97,18 +94,6 @@
           <sc-for list="{{ moreItems }}" as="m" hint-placeholder-count="2">
             <a href="{{ m.href }}" onClick="{{ closeMore }}" style="padding: 10px 12px; border-radius: 5px; font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; color: #2A312C; text-decoration: none;" style-hover="background: rgba(14,82,54,0.07); color: #0E5236">{{ m.label }}</a>
           </sc-for>
-            <div style="height: 1px; margin: 6px 6px; background: rgba(27,33,29,0.12);"></div>
-            <p style="margin: 6px 12px 2px; font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #E8891B;">Podgląd wariantów</p>
-            <sc-for list="{{ previewRows }}" as="r" hint-placeholder-count="2">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 5px 12px;">
-                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 12.5px; font-weight: 500; color: #3C443D;">{{ r.label }}</span>
-                <div style="display: flex; gap: 2px; padding: 2px; border: 1px solid rgba(27,33,29,0.16); border-radius: 999px;">
-                  <sc-for list="{{ r.opts }}" as="o" hint-placeholder-count="2">
-                    <button onClick="{{ o.pick }}" style="min-height: 26px; padding: 0 10px; border: 0; border-radius: 999px; cursor: pointer; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; background: {{ o.bg }}; color: {{ o.color }};">{{ o.label }}</button>
-                  </sc-for>
-                </div>
-              </div>
-            </sc-for>
         </div>
       </sc-if>
     </div>
@@ -171,27 +156,6 @@
     </header>
 
     <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-    <sc-if value="{{ heroBand }}" hint-placeholder-val="{{ false }}">
-    <section style="position: relative; display: flex; align-items: flex-end; min-height: {{ bandH }}; overflow: hidden; background: #1B211D;">
-      <img src="img/mgla-nad-grzbietami.webp" alt="{{ t.heroAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%;">
-      <div style="position: absolute; inset: 0; background: rgba(14,22,17,0.44);"></div>
-      <div style="position: relative; width: 100%; max-width: 1280px; margin: 0 auto; padding: {{ bandPad }};">
-        <h1 style="margin: 0; max-width: 15ch; font-size: clamp(44px, 7vw, 86px); font-weight: 400; line-height: 1.02; letter-spacing: -0.02em; color: #FAF8F4; text-wrap: balance;"><span style="display: block;">{{ t.heroH1 }}</span><span style="display: block; font-style: italic; color: #E8891B;">{{ t.heroH1b }}</span></h1>
-        <p style="margin: 28px 0 0; display: inline-flex; align-items: center; gap: 14px; font-size: 24px; font-style: italic; color: #FAF8F4;"><span style="width: 34px; height: 1px; background: #E8891B;"></span>{{ t.tagline }}</p>
-      </div>
-    </section>
-    <section style="max-width: 1280px; margin: 0 auto; padding: {{ bandBelowPad }};">
-      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px 64px;">
-        <img src="img/logotyp-wasylprowadzi.webp" alt="Wasyl prowadzi" style="display: block; width: {{ bandLogoW }}; max-width: 100%; height: auto; margin-left: -8px; mix-blend-mode: multiply;">
-        <p style="margin: 0; max-width: 42ch; font-size: 20px; line-height: 1.6; color: #3C443D;">{{ t.heroLead }}</p>
-      </div>
-      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; margin-top: 36px; padding-top: 20px; border-top: 1px solid rgba(27,33,29,0.16);">
-        <p style="margin: 0; font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase; color: #6E7269;">{{ t.kicker }}</p>
-        <a href="#historia" style="font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">{{ t.startLink }}</a>
-      </div>
-    </section>
-    </sc-if>
-    <sc-if value="{{ heroClassic }}" hint-placeholder-val="{{ true }}">
     <section style="max-width: 1280px; margin: 0 auto; padding: {{ heroPad }};">
       <div style="display: grid; grid-template-columns: {{ heroCols }}; gap: {{ heroGap }}; align-items: end;">
 
@@ -212,7 +176,6 @@
         <a href="#historia" style="font-family: Barlow, system-ui, sans-serif; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #0E5236; text-decoration: none;" style-hover="color: #E8891B">{{ t.startLink }}</a>
       </div>
     </section>
-    </sc-if>
 
     <section id="historia" style="border-top: 1px solid rgba(27,33,29,0.12); padding: 84px {{ sidePad }};">
       <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 56px;">
@@ -484,18 +447,6 @@
             <button onClick="{{ closeMore }}" aria-label="Zamknij" style="position: absolute; top: 10px; right: 8px; display: grid; place-items: center; width: 44px; height: 44px; background: transparent; border: 0; border-radius: 999px; cursor: pointer; color: #3C443D;"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round"><path d="M5 5 19 19"></path><path d="M19 5 5 19"></path></svg></button>
             <sc-for list="{{ moreItems }}" as="m" hint-placeholder-count="2">
               <a href="{{ m.href }}" onClick="{{ closeMore }}" style="display: flex; align-items: center; min-height: 52px; padding: 0 12px; border-radius: 6px; font-family: Barlow, system-ui, sans-serif; font-size: 15px; font-weight: 500; color: #2A312C; text-decoration: none;" style-hover="background: rgba(14,82,54,0.07)">{{ m.label }}</a>
-            </sc-for>
-            <div style="height: 1px; margin: 6px 4px; background: rgba(27,33,29,0.12);"></div>
-            <p style="margin: 6px 12px 2px; font-family: Barlow, system-ui, sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #E8891B;">Podgląd wariantów</p>
-            <sc-for list="{{ previewRows }}" as="r" hint-placeholder-count="2">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 12px;">
-                <span style="font-family: Barlow, system-ui, sans-serif; font-size: 14px; font-weight: 500; color: #3C443D;">{{ r.label }}</span>
-                <div style="display: flex; gap: 2px; padding: 2px; border: 1px solid rgba(27,33,29,0.16); border-radius: 999px;">
-                  <sc-for list="{{ r.opts }}" as="o" hint-placeholder-count="2">
-                    <button onClick="{{ o.pick }}" style="min-height: 40px; padding: 0 14px; border: 0; border-radius: 999px; cursor: pointer; font-family: Barlow, system-ui, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; background: {{ o.bg }}; color: {{ o.color }};">{{ o.label }}</button>
-                  </sc-for>
-                </div>
-              </div>
             </sc-for>
           </div>
         </div>
@@ -850,7 +801,7 @@ const I18N = {
 };
 
 class Component extends DCLogic {
-  state = { active: 'historia', open: null, shortViewport: false, langOpen: false, moreOpen: false, narrow: false, barAtEnd: false, lang: 'pl', view: 'home', heroV: 'classic', fontV: 'serif', gal: null };
+  state = { active: 'historia', open: null, shortViewport: false, langOpen: false, moreOpen: false, narrow: false, barAtEnd: false, lang: 'pl', view: 'home', gal: null };
 
   // sekcje strony głównej montują się ponownie po powrocie z podstrony — czekamy, aż będą w układzie
   scrollWhenReady(getEl, offset) {
@@ -882,10 +833,6 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
-    try {
-      const p = JSON.parse(window.localStorage.getItem('wasyl-preview') || '{}');
-      if (p.heroV || p.fontV) this.setState({ heroV: p.heroV || 'classic', fontV: p.fontV || 'serif' });
-    } catch (e) {}
     let start = this.state.lang;
     try {
       const saved = window.localStorage.getItem('wasyl-lang');
@@ -1003,12 +950,6 @@ class Component extends DCLogic {
     bar.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
   }
 
-  setPreview(key, val) {
-    this.setState({ [key]: val }, () => {
-      try { window.localStorage.setItem('wasyl-preview', JSON.stringify({ heroV: this.state.heroV, fontV: this.state.fontV })); } catch (e) {}
-    });
-  }
-
   renderVals() {
     const accent = this.props.accent ?? '#0E5236';
     const t = I18N[this.state.lang] || I18N.pl;
@@ -1115,23 +1056,6 @@ class Component extends DCLogic {
       moreOpen: this.state.moreOpen,
       toggleMore: () => this.setState(s => ({ moreOpen: !s.moreOpen, langOpen: false })),
       closeMore: () => this.setState({ moreOpen: false }),
-      heroBand: this.state.heroV === 'band',
-      heroClassic: this.state.heroV !== 'band',
-      fontV: this.state.fontV,
-      bandH: this.state.narrow ? 'max(440px, 70vh)' : 'max(520px, min(78vh, 760px))',
-      bandPad: this.state.narrow ? '0 22px 40px' : '0 56px 72px',
-      bandBelowPad: this.state.narrow ? '32px 22px 36px' : '44px 56px 40px',
-      bandLogoW: this.state.narrow ? '220px' : '300px',
-      previewRows: [
-        ['Top', 'heroV', [['classic', 'Klasyczny'], ['band', 'Pas']]],
-        ['Krój', 'fontV', [['serif', 'Szeryfowy'], ['sans', 'Bezszeryfowy']]]
-      ].map(([label, key, opts]) => ({
-        label,
-        opts: opts.map(([v, l]) => {
-          const on = this.state[key] === v;
-          return { label: l, pick: () => this.setPreview(key, v), bg: on ? '#0E5236' : 'transparent', color: on ? '#FAF8F4' : '#2A312C' };
-        })
-      })),
       moreActive: legalActive,
       isHome: this.state.view === 'home',
       showPrivacy: this.state.view === 'privacy',
